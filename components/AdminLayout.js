@@ -123,13 +123,7 @@ export default function AdminLayout({ children }) {
                   व्यापारी व्यवस्थापन
                 </Link>
               </li>
-              <li>
-                <Link href="/admin/products" className={`block px-4 py-2 rounded font-medium ${
-                  router.pathname === '/admin/products' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
-                }`}>
-                  उत्पादन व्यवस्थापन
-                </Link>
-              </li>
+             
               <li>
                 <Link href="/admin/gallery" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin/gallery' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
