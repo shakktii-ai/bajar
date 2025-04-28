@@ -274,7 +274,7 @@ export default function DailyRate() {
             <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
               <p>{error}</p>
             </div>
-          ) : dailyPrices.length === 0 ? (
+          ) : !dailyPrices || !Array.isArray(dailyPrices) || dailyPrices.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 rounded-lg">
               <FaFilter className="mx-auto text-4xl text-gray-300 mb-4" />
               <p className="text-gray-600 text-lg">निवडलेल्या तारखेसाठी कोणतेही बाजारभाव उपलब्ध नाहीत.</p>
@@ -287,9 +287,9 @@ export default function DailyRate() {
               </p>
 
               {/* Dynamic Category Tables */}
-              {categories.map((category, categoryIndex) => {
-                const items = groupedProducts[category];
-                if (!items || items.length === 0) return null;
+              {Array.isArray(categories) && categories.map((category, categoryIndex) => {
+                const items = groupedProducts && groupedProducts[category];
+                if (!items || !Array.isArray(items) || items.length === 0) return null;
                 
                 // Get product unit from first item to use in category header
                 const firstProduct = items[0]?.product;
@@ -313,20 +313,20 @@ export default function DailyRate() {
                     </h3>
                     
                     <div className="overflow-x-auto">
-                      <table className="min-w-full bg-white border border-gray-300">
-                        <thead>
-                          <tr className="bg-green-700 text-white">
-                            <th className="py-3 px-4 border">उत्पादन</th>
-                            <th className="py-3 px-4 border">प्रत</th>
-                            <th className="py-3 px-4 border">किमान दर (₹)</th>
-                            <th className="py-3 px-4 border">कमाल दर (₹)</th>
-                            <th className="py-3 px-4 border">सरासरी दर (₹)</th>
-                            <th className="py-3 px-4 border">मागील दिवसाचा दर (₹)</th>
-                            <th className="py-3 px-4 border">बदल (%)</th>
+                      <table className="min-w-full border border-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="py-3 px-4 border text-left font-medium">उत्पादन</th>
+                            <th className="py-3 px-4 border text-center font-medium">ग्रेड</th>
+                            <th className="py-3 px-4 border text-center font-medium">न्यूनतम</th>
+                            <th className="py-3 px-4 border text-center font-medium">अधिकतम</th>
+                            <th className="py-3 px-4 border text-center font-medium">सरासरी</th>
+                            <th className="py-3 px-4 border text-center font-medium">मागील सरासरी</th>
+                            <th className="py-3 px-4 border text-center font-medium">बदल %</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {items.map((item, index) => {
+                          {Array.isArray(items) && items.map((item, index) => {
                             // Extract data carefully with fallbacks
                             if (!item || !item.product) {
                               return null; // Skip if product data is missing

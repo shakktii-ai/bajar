@@ -199,12 +199,12 @@ export default function Home({Logout, user}) {
       <div className="px-4 py-8 bg-gray-50">
         <h2 className="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">आजचे बाजार दर</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
-          {products.length === 0 ? (
+          {!products || !Array.isArray(products) || products.length === 0 ? (
             <div className="col-span-full text-center py-10">
               <p className="text-lg text-gray-600">आजचे बाजार भाव लोड करत आहे...</p>
             </div>
           ) : (
-            products.map((product) => {
+            Array.isArray(products) && products.map((product) => {
               // Handle both DailyProducts and direct Products format
               const isFromDailyProducts = product.product && product.product._id;
               const productData = isFromDailyProducts ? product.product : product;
