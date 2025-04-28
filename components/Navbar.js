@@ -419,40 +419,81 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       </nav>
 
 {mobileMenuOpen && (
-  <div className="md:hidden bg-white border-t shadow-lg">
+  <div className="md:hidden bg-white border-t shadow-lg pb-4">
     <div className="flex flex-col p-4 space-y-3">
-      {[
-        { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Daily Rate", path: "/daily-rate" },
-        { name: "Contact", path: "/contact" },
-      ].map((item) => (
-        <Link key={item.path} href={item.path} className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
-          {item.name}
-        </Link>
-      ))}
+      <Link href="/" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Home
+      </Link>
 
       {/* Mobile Dropdowns */}
-      {[
-        { title: "About Us", key: "about", links: [{ name: "About Us", path: "/about" }, { name: "Sabhapati Speech", path: "/sabha-speech" }] },
-        { title: "Market Details", key: "market", links: [{ name: "Market Overview", path: "/market-overview" }, { name: "Market Trends", path: "/market-trends" }] },
-        { title: "Gallery", key: "gallery", links: [{ name: "Photos", path: "/photos" }, { name: "Videos", path: "/videos" }] },
-      ].map((menu) => (
-        <div key={menu.key} className="border-b">
-          <button className="p-3 w-full text-left flex justify-between" onClick={() => setDropdownOpen(dropdownOpen === menu.key ? null : menu.key)}>
-            {menu.title}
-          </button>
-          {dropdownOpen === menu.key && (
-            <div className="bg-gray-100">
-              {menu.links.map((link) => (
-                <Link key={link.path} href={link.path} className="block px-6 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
+      <div className="border-b">
+        <button className="p-3 w-full text-left flex justify-between items-center" onClick={() => setDropdownOpen(dropdownOpen === "about" ? null : "about")}>
+          <span>About Us</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform ${dropdownOpen === "about" ? "transform rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+        {dropdownOpen === "about" && (
+          <div className="bg-gray-100 pl-4">
+            <Link href="/about" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
+            <Link href="/sabhapatiSpeech" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Sabhapati Speech</Link>
+            <Link href="/directorBoard20082015" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2008-2015</Link>
+            <Link href="/directorBoard20152020" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2015-2020</Link>
+            <Link href="/directorBoard20232028" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2023-2028</Link>
+            <Link href="/financialReport" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Financial Report</Link>
+            <Link href="/staff" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Staff</Link>
+            <Link href="/socialWork" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Social Work</Link>
+            <Link href="/awards" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Awards</Link>
+            <Link href="/futurePlans" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Future Plans</Link>
+          </div>
+        )}
+      </div>
+
+      <div className="border-b">
+        <button className="p-3 w-full text-left flex justify-between items-center" onClick={() => setDropdownOpen(dropdownOpen === "market" ? null : "market")}>
+          <span>Market Details</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform ${dropdownOpen === "market" ? "transform rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+        {dropdownOpen === "market" && (
+          <div className="bg-gray-100 pl-4">
+            <Link href="/marketDetails" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Details</Link>
+            <Link href="/marketPremises" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Premises</Link>
+            <Link href="/marketArea" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Area</Link>
+            <Link href="/marketFeatures" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Features</Link>
+            <Link href="/developmentWork" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Development Work</Link>
+            <Link href="/facilities" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Facilities</Link>
+          </div>
+        )}
+      </div>
+
+      <Link href="/products" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Products
+      </Link>
+
+      <Link href="/daily-rate" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Daily Rate
+      </Link>
+
+      <div className="border-b">
+        <button className="p-3 w-full text-left flex justify-between items-center" onClick={() => setDropdownOpen(dropdownOpen === "gallery" ? null : "gallery")}>
+          <span>Gallery</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform ${dropdownOpen === "gallery" ? "transform rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+        {dropdownOpen === "gallery" && (
+          <div className="bg-gray-100 pl-4">
+            <Link href="/photosGallery" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Photos Gallery</Link>
+            <Link href="/videosGallery" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Videos Gallery</Link>
+          </div>
+        )}
+      </div>
+
+      <Link href="/contact" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Contact
+      </Link>
     </div>
   </div>
 )}
