@@ -1,20 +1,50 @@
 import Head from "next/head";
-import Image from "next/image";
-import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { useState, useEffect, useRef } from "react";
 
-export default function Home() {
+import Carousel from "@/components/carousel";
+
+export default function Home({Logout, user}) {
+  const [dropdown, setDropdown] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]); // This will hold the products fetched from the API
+
+  // Toggle dropdown menu
+  const toggleDropdown = () => setDropdown((prev) => !prev);
+
+  // Fetch products using a GET API call
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch('/api/addAndGetProducts'); // Adjust API endpoint as necessary
+      const data = await res.json();
+      setProducts(data); // Set the fetched products
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  // Add a product to the cart
+  const addToCart = (product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
+
+  // Function to calculate time ago
+  const timeAgo = (timestamp) => {
+    const currentTime = new Date();
+    const productTime = new Date(timestamp);
+    const diffInMinutes = Math.floor((currentTime - productTime) / (1000 * 60));
+    return diffInMinutes <= 0 ? "Just now" : `${diffInMinutes} min ago`;
+  };
+
+  // Function to calculate average price
+  const calculateAvgPrice = (max, min) => {
+    return ((max + min) / 2).toFixed(2);
+  };
+
+  // UseEffect to fetch products when the component mounts
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <>
       <Head>
@@ -23,96 +53,69 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
-        <main className={styles.main}>
-          <Image
-            className={styles.logo}
-            src="https://nextjs.org/icons/next.svg"
-            alt="Next.js logo"
-            width={180}
-            height={38}
-            priority
-          />
-          <ol>
-            <li>
-              Get started by editing <code>pages/index.js</code>.
-            </li>
-            <li>Save and see your changes instantly.</li>
-          </ol>
 
-          <div className={styles.ctas}>
-            <a
-              className={styles.primary}
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                className={styles.logo}
-                src="https://nextjs.org/icons/vercel.svg"
-                alt="Vercel logomark"
-                width={20}
-                height={20}
-              />
-              Deploy now
-            </a>
-            <a
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.secondary}
-            >
-              Read our docs
-            </a>
-          </div>
-        </main>
-        <footer className={styles.footer}>
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="https://nextjs.org/icons/file.svg"
-              alt="File icon"
-              width={16}
-              height={16}
-            />
-            Learn
-          </a>
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="https://nextjs.org/icons/window.svg"
-              alt="Window icon"
-              width={16}
-              height={16}
-            />
-            Examples
-          </a>
-          <a
-            href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="https://nextjs.org/icons/globe.svg"
-              alt="Globe icon"
-              width={16}
-              height={16}
-            />
-            Go to nextjs.org →
-          </a>
-        </footer>
+    <div className="text-center m-36 ">
+      <div className="flex justify-center flex-col items-center font-bold text-7xl">
+        <h1 className="block">Welcome to Khetiwadi for</h1> <h2> daily Mandi Bhav.</h2>
+        </div>
+      <h2 className="text-sm block mt-10">There are many mandi bhav websites but difficult to use. On the other hand, we provide the detailed mandi bhav,</h2><h2> and we hope that we are providing you the correct information.</h2>
+        </div>
+
+
+
+      <div className=" h-[10rem] md:h-[30rem] overflow-y-hidden  rounded-xl m-2">
+       <Carousel />
+       </div>
+
+
+
+
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-2">
+  {/* Card 1 */}
+{products.length === 0 ? (
+  <p>Loading products...</p>
+) : (
+  products.map((product) => (
+  <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4">
+    <div className="flex gap-2 items-center">
+      <span className="bg-green-700 text-white text-sm px-3 py-1 rounded-md">
+      {timeAgo(product.createdAt)} 
+      </span>
+      <span className="bg-green-700 text-white text-sm px-3 py-1 rounded-md">
+      {product.createdAt}
+      </span>
+    </div>
+    <div className="grid grid-cols-2 gap-4 mt-2">
+      {/* Left Content */}
+      <div>
+        <h2 className="text-xl font-bold">{product.productNameEnglish}</h2>
+        <p className="text-gray-500">{product.productNameMarathi}</p>
+        
       </div>
+      {/* Right Price Details */}
+      <div className="text-right">
+        <p className="text-gray-700 font-semibold">कीमत:</p>
+        <p className="text-sm text-gray-700">
+          Max: <span className="text-green-700 font-bold">₹ {product.PriceMax}</span>
+        </p>
+        <p className="text-sm text-white bg-red-500 lg:ml-[12rem] ml-[4rem] p-[0.2rem] rounded-lg">
+          Min: <span className="text-white font-bold">₹{product.PriceMin}</span>
+        </p>
+        <p className="text-sm text-gray-700">
+          Avg: <span className="text-green-700 font-bold">₹ {calculateAvgPrice(product.PriceMax, product.PriceMin)}</span>
+        </p>
+        <p className="text-xs text-gray-500">(1{product.ProductInUnit})</p>
+      </div>
+    </div>
+  </div>
+))
+)}
+  
+  </div>
+
+
     </>
   );
 }
+
