@@ -6,7 +6,7 @@ export default function SabhapatiSpeech() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
-            ददडोरी कृषि उत्पन्न बाजार सषमती.षज.नाषिक
+            दिंडोरी कृषि उत्पन्न बाजार समिती.जि.नाशिक
           </h1>
           <h2 className="text-2xl font-semibold text-center text-green-700 mb-6">
             सभापती यांचे मनोगत
@@ -15,9 +15,9 @@ export default function SabhapatiSpeech() {
           <div className="flex flex-col md:flex-row items-center md:items-start mb-8">
             <div className="w-48 h-48 bg-gray-200 rounded-full overflow-hidden flex-shrink-0 mb-4 md:mb-0 md:mr-6">
               <img 
-                src="/images/sabhapati.jpg" 
+                src="/sabhapati.png" 
                 alt="मा.श्री.प्रशाांत प्रकाश कड - सभापती" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-fill"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = "https://via.placeholder.com/200x200?text=Sabhapati";
@@ -27,7 +27,7 @@ export default function SabhapatiSpeech() {
             <div>
               <h3 className="text-xl font-medium text-green-800 mb-2">मा.श्री.प्रशाांत प्रकाश कड</h3>
               <p className="text-gray-700 font-medium mb-1">सभापती</p>
-              <p className="text-gray-600 italic mb-4">ददडोरी कृषि उत्पन्न बाजार सषमती</p>
+              <p className="text-gray-600 italic mb-4">दिंडोरी कृषि उत्पन्न बाजार समिती</p>
             </div>
           </div>
 
@@ -37,7 +37,7 @@ export default function SabhapatiSpeech() {
                 नमस्कार,
               </p>
               <p className="mb-4">
-                ददडोरी कृषि उत्पन्न बाजार सषमतीच्या वेबसाइटवर आपले स्वागत आहे. आपणास बाजार समितीच्या कार्यपद्धती, उपलब्ध सुविधा आणि प्रगतीचा आढावा याबद्दल माहिती मिळावी या हेतूने ही वेबसाईट विकसित करण्यात आली आहे.
+                दिंडोरी कृषि उत्पन्न बाजार समितीच्या वेबसाइटवर आपले स्वागत आहे. आपणास बाजार समितीच्या कार्यपद्धती, उपलब्ध सुविधा आणि प्रगतीचा आढावा याबद्दल माहिती मिळावी या हेतूने ही वेबसाईट विकसित करण्यात आली आहे.
               </p>
               <p className="mb-4">
                 दिंडोरी कृषि उत्पन्न बाजार समितीची स्थापना 5 जानेवारी 1989 रोजी झाली असून गेल्या 35 वर्षांपासून या बाजार समितीने शेतकरी आणि ग्राहक यांच्यामध्ये सेतू म्हणून कार्य केले आहे. शेतकऱ्यांच्या हिताचे जतन करत त्यांना त्यांच्या उत्पादनाचे योग्य मूल्य मिळवून देण्यासाठी आम्ही नेहमीच कटिबद्ध आहोत.

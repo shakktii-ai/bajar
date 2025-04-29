@@ -10,21 +10,21 @@ const Carousel = () => {
   const ads = [
     {
       id: 1,
-      src: 'https://content3.jdmagicbox.com/comp/nashik/u6/0253px253.x253.230310054904.i5u6/catalogue/niphad-kanda-market-niphad-nashik-markets-Vsei1QMFWa.jpg', // Create these in your public directory
+      src: '/ads/ad1.jpg', // Create these in your public directory
       alt: 'Advertisement 1',
       title: 'बाजार स्पेशल ऑफर',
       link: '/special-offers'
     },
     {
       id: 2,
-      src: 'https://i0.wp.com/www.globaltrademag.com/wp-content/uploads/2019/08/shutterstock_image-2-2.jpg?fit=757%2C393&ssl=1',
+      src: '/ads/ad2.jpg',
       alt: 'Advertisement 2',
       title: 'नवीन उत्पादने',
       link: '/new-products'
     },
     {
       id: 3,
-      src: 'https://insanelygoodrecipes.com/wp-content/uploads/2022/12/Fresh-and-Orgaic-Pink-Pomegranate.jpg',
+      src: '/ads/ad3.jpg',
       alt: 'Advertisement 3',
       title: 'मोसमी फळे आणि भाज्या',
       link: '/seasonal-products'

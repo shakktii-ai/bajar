@@ -188,6 +188,7 @@
 //                   <div className="absolute left-0 z-50 w-48 bg-white shadow-lg  border border-gray-300">
 //                     <Link href="/photos" className="block px-4 py-2 border-b-2 hover:bg-gray-100">Photos</Link>
 //                     <Link href="/videos" className="block px-4 py-2 border-b-2 hover:bg-gray-100">Videos</Link>
+//                     <Link href="/interviews" className="block px-4 py-2 border-b-2 hover:bg-gray-100">Interviews</Link>
 //                   </div>
 //                 )}
 //               </div>
@@ -285,12 +286,6 @@ const Navbar = () => {
                     <Link href="/sabhapatiSpeech" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                       Sabhapati Speech
                     </Link>
-                    <Link href="/directorBoard20082015" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
-                    Director Board 2008-2015
-                    </Link>
-                    <Link href="/directorBoard20152020" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
-                    Director Board 2015-2020
-                    </Link>
                     <Link href="/directorBoard20232028" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                     Director Board 2023-2028
                     </Link>
@@ -387,10 +382,22 @@ const Navbar = () => {
                     <Link href="/videosGallery" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                       Videos Gallery
                     </Link>
+                    <Link href="/interviews" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
+                      Interviews
+                    </Link>
                   </div>
                 )}
               </div>
 
+              {/* Blogs */}
+              <Link
+                href="/blogs"
+                className={`text-gray-700 p-2 px-6 md:px-8 hover:text-red-600 hover:border-t-2 hover:border-t-red-700 ${
+                  router.pathname === "/blogs" ? "border-t-2 border-t-red-700" : ""
+                }`}
+              >
+                Blogs</Link>
+                
               {/* Contact */}
               <Link
                 href="/contact"
@@ -463,6 +470,10 @@ const Navbar = () => {
         Daily Rate
       </Link>
 
+      <Link href="/blogs" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Blogs
+      </Link>
+
       <div className="border-b">
         <button className="p-3 w-full text-left flex justify-between items-center" onClick={() => setDropdownOpen(dropdownOpen === "gallery" ? null : "gallery")}>
           <span>Gallery</span>
@@ -474,6 +485,7 @@ const Navbar = () => {
           <div className="bg-gray-100 pl-4">
             <Link href="/photosGallery" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Photos Gallery</Link>
             <Link href="/videosGallery" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Videos Gallery</Link>
+            <Link href="/interviews" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Interviews</Link>
           </div>
         )}
       </div>

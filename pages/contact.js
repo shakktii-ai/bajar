@@ -7,7 +7,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
-            ददडोरी कृषि उत्पन्न बाजार सषमती.षज.नाषिक
+            दिंडोरी कृषि उत्पन्न बाजार समिती.जि.नाशिक
           </h1>
           <h2 className="text-2xl font-semibold text-center text-green-700 mb-6">
             संपर्क माहिती
@@ -23,12 +23,12 @@ export default function Contact() {
                     <FaMapMarkerAlt className="text-green-600 h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-1">कार्यालय पत्ता</h4>
+                    <h4 className="font-medium text-gray-900 mb-1">मुख्य मार्केट यार्ड</h4>
                     <p className="text-gray-700">
                       दिंडोरी कृषि उत्पन्न बाजार समिती,<br />
-                      प्रशासकीय इमारत, मार्केट यार्ड,<br />
-                      नाशिक रोड, दिंडोरी - 422202<br />
-                      जिल्हा नाशिक, महाराष्ट्र
+                      निंबवडी रोड, दिंडोरी,<br />
+                      ता. दिंडोरी, जि. नाशिक - 422202<br />
+                      स्थापना: ५ जानेवारी १९८५
                     </p>
                   </div>
                 </div>
@@ -39,8 +39,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 mb-1">दूरध्वनी क्रमांक</h4>
-                    <p className="text-gray-700">कार्यालय: 02557-222222</p>
-                    <p className="text-gray-700">सचिव: 02557-222223</p>
+                    <p className="text-gray-700">कार्यालय: (02557) 221097</p>
+                    <p className="text-gray-700">उपबाजार आवार (वणी): (02550) 320542</p>
                   </div>
                 </div>
 
@@ -50,8 +50,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 mb-1">ई-मेल पत्ता</h4>
-                    <p className="text-gray-700">apmc.dindori@gov.in</p>
-                    <p className="text-gray-700">secretary.dindoribazar@gmail.com</p>
+                    <p className="text-gray-700">am_dindori@msamb.com</p>
                   </div>
                 </div>
 

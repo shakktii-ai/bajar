@@ -132,6 +132,20 @@ export default function AdminLayout({ children }) {
                 </Link>
               </li>
               <li>
+                <Link href="/admin/add-interview" className={`block px-4 py-2 rounded font-medium ${
+                  router.pathname === '/admin/add-interview' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
+                }`}>
+                  मुलाखती व्यवस्थापन
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/addBlogs" className={`block px-4 py-2 rounded font-medium ${
+                  router.pathname === '/admin/addBlogs' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
+                }`}>
+                  ब्लॉग व्यवस्थापन
+                </Link>
+              </li>
+              <li>
                 <Link href="/admin/reports" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin/reports' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
                 }`}>

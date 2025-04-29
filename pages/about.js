@@ -6,7 +6,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
-            ददडोरी कृषि उत्पन्न बाजार सषमती.षज.नाषिक
+            दिंडोरी कृषि उत्पन्न बाजार समिती.जि.नाशिक
           </h1>
           <h2 className="text-2xl font-semibold text-center text-green-700 mb-6">
             About Us
@@ -51,16 +51,18 @@ export default function About() {
               <h3 className="text-xl font-semibold text-green-700 mb-4">Contact Information</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-4 rounded">
-                  <h4 className="font-medium mb-2">Main Office:</h4>
-                  <p>Dindori Krishi Utpann Bajar Samiti</p>
-                  <p>Dindori, District Nashik</p>
-                  <p>Maharashtra</p>
+                  <h4 className="font-medium mb-2">मुख्य मार्केट यार्ड:</h4>
+                  <p>दिंडोरी कृषि उत्पन्न बाजार समिती</p>
+                  <p>निंबवडी रोड, दिंडोरी,</p>
+                  <p>ता. दिंडोरी, जि. नाशिक - 422202</p>
+                  <p>स्थापना: ५ जानेवारी १९८५</p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded">
-                  <h4 className="font-medium mb-2">Contact Details:</h4>
-                  <p>Phone: 02557-222222</p>
-                  <p>Email: apmc.dindori@maharashtra.gov.in</p>
-                  <p>Office Hours: Monday-Saturday, 10:00 AM to 6:00 PM</p>
+                  <h4 className="font-medium mb-2">संपर्क तपशील:</h4>
+                  <p>फोन: (02557) 221097</p>
+                  <p>उपबाजार आवार (वणी): (02550) 320542</p>
+                  <p>ई-मेल: am_dindori@msamb.com</p>
+                  <p>कार्यालयीन वेळ: सोमवार-शनिवार, सकाळी 10:00 ते संध्याकाळी 6:00</p>
                 </div>
               </div>
             </div>
