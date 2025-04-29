@@ -66,7 +66,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member2.png" 
+                      src="/samiti/member2new.png" 
                       alt="श्री. कैलास माधवराव बारसे" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -123,7 +123,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member6.png" 
+                      src="/samiti/member6new.png" 
                       alt="श्री. सुरेश निंबाजी पवरेकर" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -151,7 +151,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member8.png" 
+                      src="/samiti/member8new.png" 
                       alt="सौ. अंजना डल्लू आघाडे" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -166,7 +166,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member9.png" 
+                      src="/samiti/member9new.png" 
                       alt="सौ. विजया गुलाबराव जाधव" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -194,7 +194,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member11.png" 
+                      src="/samiti/member11new.png" 
                       alt="श्री. दत्तू मारुती शिंदले" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -251,7 +251,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member15.png" 
+                      src="/samiti/member15new.png" 
                       alt="श्री. फजलराज इशाकमिया मोहम" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -280,7 +280,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member17.png" 
+                      src="/samiti/member17new.png" 
                       alt="श्री. यशवंत दत्तात्रय जाधव" 
                       fill
                       style={{objectFit: 'cover'}}
@@ -294,7 +294,7 @@ export default function PhotosGallery() {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   <div className="relative h-48 w-full">
                     <Image 
-                      src="/samiti/member18.png" 
+                      src="/samiti/mwmber18new.png" 
                       alt="सचिव" 
                       fill
                       style={{objectFit: 'cover'}}
