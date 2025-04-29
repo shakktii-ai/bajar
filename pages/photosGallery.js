@@ -50,12 +50,14 @@ export default function PhotosGallery() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {/* Row 1 */}
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member1.png" 
                       alt="श्री. वामनराव शिवराम पाटील" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -64,12 +66,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member2new.png" 
                       alt="श्री. कैलास माधवराव बारसे" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -78,12 +82,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member3.png" 
                       alt="श्री. जीव चौधरी श्रावण" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -92,12 +98,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member4.png" 
                       alt="श्री. संगपाल महेंद्र शिंदत" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -107,12 +115,14 @@ export default function PhotosGallery() {
 
                 {/* Row 2 */}
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member5.png" 
                       alt="श्री. उत्तमराव रामचंद्र पाटील" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -121,12 +131,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member6new.png" 
                       alt="श्री. सुरेश निंबाजी पवरेकर" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -135,12 +147,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member7.png" 
                       alt="श्री. संदिप बेलदारे श्रावण" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -149,12 +163,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member8new.png" 
                       alt="सौ. अंजना डल्लू आघाडे" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -164,12 +180,14 @@ export default function PhotosGallery() {
 
                 {/* Row 3 */}
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member9new.png" 
                       alt="सौ. विजया गुलाबराव जाधव" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -178,12 +196,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member10.png" 
                       alt="श्री. राम भागवत वाटले" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -192,12 +212,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member11new.png" 
                       alt="श्री. दत्तू मारुती शिंदले" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -206,12 +228,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member12.png" 
                       alt="श्री. दत्तू शिवाजीराव राऊत" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -221,12 +245,14 @@ export default function PhotosGallery() {
 
                 {/* Row 4 */}
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member13.png" 
                       alt="श्री. संतराम मनीराम वाघेला" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -235,12 +261,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member14.png" 
                       alt="श्री. अनिल कमलेश उटरेसिया" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -249,12 +277,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member15new.png" 
                       alt="श्री. फजलराज इशाकमिया मोहम" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -263,12 +293,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member16.png" 
                       alt="श्री. ईश्वर वारके" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -278,12 +310,14 @@ export default function PhotosGallery() {
 
                 {/* Row 5 */}
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
                       src="/samiti/member17new.png" 
                       alt="श्री. यशवंत दत्तात्रय जाधव" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">
@@ -292,12 +326,14 @@ export default function PhotosGallery() {
                 </div>
 
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-60 w-full">
                     <Image 
-                      src="/samiti/mwmber18new.png" 
+                      src="/samiti/member18new.png" 
                       alt="सचिव" 
                       fill
-                      style={{objectFit: 'cover'}}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                      style={{objectFit: 'contain'}}
                     />
                   </div>
                   <div className="p-3 text-center">

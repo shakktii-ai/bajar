@@ -93,9 +93,53 @@ export default function Home({Logout, user}) {
       </div>
     </div>
 
-    {/* Carousel Section */}
-    <div className="h-[15rem] sm:h-[20rem] md:h-[30rem] overflow-hidden rounded-xl mx-2 my-6">
-      <Carousel />
+    {/* Advertisement Carousel Section */}
+    <div className="py-10 px-4 bg-gradient-to-b from-white to-green-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+          <div className="flex items-center mb-4 md:mb-0">
+            <div className="w-1.5 h-10 bg-green-600 rounded-full mr-3"></div>
+            <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-500">जाहिराती</h2>
+            <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">FEATURED</div>
+          </div>
+          <a href="/contact" className="group bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center">
+            <span className="mr-2">जाहिरात देण्यासाठी संपर्क करा</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </a>
+        </div>
+
+        <div className="relative">
+          {/* Decorative elements */}
+          <div className="absolute -top-4 -left-4 w-16 h-16 bg-yellow-400 opacity-20 rounded-full blur-xl"></div>
+          <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-green-400 opacity-20 rounded-full blur-xl"></div>
+          
+          {/* Carousel container with decorative border */}
+          <div className="relative h-[15rem] sm:h-[20rem] md:h-[25rem] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.2)] border-4 border-white">
+            <Carousel />
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+            </svg>
+            <span className="font-medium text-gray-800">9876543210</span>
+          </div>
+          <div className="h-6 border-l border-gray-300 hidden sm:block"></div>
+          <div className="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            </svg>
+            <a href="mailto:ads@bajar.com" className="text-green-600 hover:text-green-800 hover:underline transition-colors">ads@bajar.com</a>
+          </div>
+          <div className="h-6 border-l border-gray-300 hidden sm:block"></div>
+          <div className="px-4 py-1.5 bg-green-50 text-green-800 rounded-full text-sm font-medium">आजच्या दिवशी जाहिरात द्या, आजच प्रकाशित होएल</div>
+        </div>
+      </div>
     </div>
     
     {/* Mission & Overview Section */}
