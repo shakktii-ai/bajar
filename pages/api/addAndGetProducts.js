@@ -46,12 +46,77 @@ const getDailyProducts = async (req, res) => {
   try {
     await connectDB();
     
-    const { startDate, endDate } = req.query;
+    const { startDate, endDate, date } = req.query;
     
     const query = {};
     
+    // If a specific date is provided
+    if (date) {
+      // Log raw date input for debugging
+      console.log('Raw date input:', date, 'Type:', typeof date);
+      
+      // Create date objects for start and end of the day to match exact date
+      const selectedDate = new Date(date);
+      console.log('Parsed date object:', selectedDate, 'Valid?', !isNaN(selectedDate.getTime()));
+      
+      // Set to start of day in local timezone
+      selectedDate.setHours(0, 0, 0, 0);
+      
+      const nextDay = new Date(selectedDate);
+      nextDay.setDate(nextDay.getDate() + 1);
+      
+      console.log('Date range for query:', {
+        'Start (local)': selectedDate.toString(),
+        'Start (ISO)': selectedDate.toISOString(),
+        'End (local)': nextDay.toString(),
+        'End (ISO)': nextDay.toISOString()
+      });
+      
+      // For MongoDB date queries, we need to ensure proper date matching
+      // Approach 1: Use date string comparison (more reliable across timezones)
+      // Parse the date parts to avoid timezone issues
+      const dateParts = date.split('-');
+      const year = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10);
+      const day = parseInt(dateParts[2], 10);
+      
+      // Create date strings for the start and end of the day in YYYY-MM-DD format
+      const dateStart = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      
+      console.log('Looking for documents with date matching:', dateStart);
+      
+      // Use $expr and $dateToString to compare date parts only, ignoring time
+      query.$expr = {
+        $eq: [
+          { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          dateStart
+        ]
+      };
+      
+      // Alternatively, keep the date range approach as a fallback
+      /*
+      query.date = {
+        $gte: selectedDate,
+        $lt: nextDay
+      };
+      */
+      
+      // For debugging, also fetch all documents to check date formats in DB
+      console.log('Getting all documents to check date formats...');
+      DailyProducts.find({}).then(allDocs => {
+        console.log('Total documents in collection:', allDocs.length);
+        if (allDocs.length > 0) {
+          console.log('Sample document dates:');
+          allDocs.slice(0, 5).forEach(doc => {
+            console.log('- Document date:', doc.date, 'Type:', typeof doc.date, 'ISO:', doc.date instanceof Date ? doc.date.toISOString() : 'Not a Date');
+          });
+        }
+      }).catch(err => console.error('Error fetching all docs:', err));
+      
+      console.log('Filtering daily products for date:', selectedDate.toISOString());
+    }
     // If date range is provided
-    if (startDate && endDate) {
+    else if (startDate && endDate) {
       query.date = {
         $gte: new Date(startDate),
         $lte: new Date(endDate)
@@ -66,6 +131,7 @@ const getDailyProducts = async (req, res) => {
       .populate('product')
       .sort({ date: -1 });
       
+    console.log(`Found ${dailyProducts.length} daily products matching query:`, query);
     res.status(200).json(dailyProducts);
   } catch (error) {
     console.error('Error fetching daily products:', error);
@@ -309,10 +375,18 @@ export default async function handler(req, res) {
     }
   }
   
-  // If no path specified but we have a date parameter, it's likely a daily products request
-  if (!path && req.query.date && req.method === 'GET') {
-    console.log('Date parameter detected, routing to getDailyProducts');
-    return getDailyProducts(req, res);
+  // Handle requests with date parameter
+  if (req.query.date && req.method === 'GET') {
+    console.log('Date parameter detected:', req.query.date);
+    // If path is 'daily' or not specified, route to getDailyProducts
+    if (!path || path === 'daily') {
+      console.log('Routing to getDailyProducts with date param');
+      return getDailyProducts(req, res);
+    } else if (path === 'products') {
+      // If path is 'products', route to getProducts
+      console.log('Routing to getProducts with date param');
+      return getProducts(req, res);
+    }
   }
   
   // Default handlers (fallback for backward compatibility)

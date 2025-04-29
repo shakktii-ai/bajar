@@ -53,11 +53,25 @@ export default function DailyPricing() {
   const fetchDailyProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/addAndGetProducts?date=${selectedDate}`);
+      
+      // Format date properly to avoid timezone issues
+      // Parse the date parts to ensure consistent formatting
+      const dateParts = selectedDate.split('-');
+      const year = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10);
+      const day = parseInt(dateParts[2], 10);
+      
+      // Format date as YYYY-MM-DD ensuring proper padding
+      const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      
+      console.log(`Fetching daily prices for date: ${formattedDate}`);
+      
+      const response = await fetch(`/api/addAndGetProducts?date=${formattedDate}&path=daily`);
       if (!response.ok) {
         throw new Error('Failed to fetch daily products');
       }
       const data = await response.json();
+      console.log(`Retrieved ${data.length} daily price entries`);
       setDailyProducts(data);
       setLoading(false);
     } catch (err) {
@@ -102,9 +116,19 @@ export default function DailyPricing() {
     }
     
     try {
+      // Format date properly to avoid timezone issues
+      // Parse the date parts to ensure consistent formatting
+      const dateParts = selectedDate.split('-');
+      const year = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10);
+      const day = parseInt(dateParts[2], 10);
+      
+      // Format date as YYYY-MM-DD ensuring proper padding
+      const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      
       const data = {
         productId: selectedProduct,
-        date: selectedDate,
+        date: formattedDate, // Use the properly formatted date
         PriceMax: maxPrice,
         PriceMin: minPrice,
         notes: priceData.notes || ''

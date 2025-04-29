@@ -29,10 +29,19 @@ export default function DailyRate() {
       setError(null);
       
       // Format the selected date for comparison
-      const dateObj = new Date(selectedDate);
-      dateObj.setHours(0, 0, 0, 0);
+      // Create date object without timezone issues
+      const dateParts = selectedDate.split('-');
+      const year = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10) - 1; // Month is 0-indexed in JavaScript
+      const day = parseInt(dateParts[2], 10);
       
-      const formattedDate = dateObj.toISOString().split('T')[0];
+      // Create date using local components to avoid timezone issues
+      const dateObj = new Date(year, month, day);
+      
+      // Format date as YYYY-MM-DD
+      const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      console.log('Selected date:', selectedDate);
+      console.log('Parsed date object:', dateObj.toString());
       console.log('Fetching data for date:', formattedDate);
       
       // First, try to get products from DailyProducts collection
