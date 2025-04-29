@@ -223,7 +223,7 @@ import { FaTimes } from "react-icons/fa";
 const Navbar = () => {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(null);
-const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <>
@@ -232,7 +232,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
         <div className="flex items-center">
           <div className="relative w-24 h-24 md:w-28 md:h-28">
             <Image 
-              src="/images/bajar-logo.png" 
+              src="/logo.jpg" 
               alt="Bajar Logo" 
               width={112} 
               height={112}
@@ -262,8 +262,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   router.pathname === "/" ? "border-t-2 border-t-red-700" : ""
                 }`}
               >
-                <div className="block">Home</div>
-                <div className="block text-[0.65rem] text-center hover:text-red-600">Welcome</div>
+                Home
               </Link>
 
               {/* About Us Dropdown */}
@@ -277,9 +276,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     router.pathname.includes("/about") ? "border-t-2 border-t-red-700" : ""
                   }`}
                 >
-                  About-us
-                  <div className="block text-[0.65rem] text-center hover:text-red-600">Information</div>
-                </button>
+                  About-us</button>
                 {dropdownOpen === "about" && (
                   <div className="absolute left-0 z-50 w-48 bg-white shadow-lg border border-gray-300">
                     <Link href="/about" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
@@ -327,9 +324,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     router.pathname.includes("/market") ? "border-t-2 border-t-red-700" : ""
                   }`}
                 >
-                  Market Details
-                  <div className="block text-[0.65rem] text-center hover:text-red-600">Bazar</div>
-                </button>
+                  Market Details</button>
                 {dropdownOpen === "market" && (
                   <div className="absolute left-0 z-50 w-48 bg-white shadow-lg border border-gray-300">
                     <Link href="/marketDetails" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
@@ -361,9 +356,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   router.pathname === "/products" ? "border-t-2 border-t-red-700" : ""
                 }`}
               >
-                <div className="block">Products</div>
-                <div className="block text-[0.65rem] text-center hover:text-red-600">Products</div>
-              </Link>
+                Products</Link>
 
               {/* Daily Rate */}
               <Link
@@ -372,9 +365,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   router.pathname === "/daily-rate" ? "border-t-2 border-t-red-700" : ""
                 }`}
               >
-                <div className="block">Daily Rate</div>
-                <div className="block text-[0.65rem] text-center hover:text-red-600">Daily Rate</div>
-              </Link>
+                Daily Rate</Link>
 
               {/* Gallery Dropdown */}
               <div
@@ -387,9 +378,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     router.pathname.includes("/gallery") ? "border-t-2 border-t-red-700" : ""
                   }`}
                 >
-                  Gallery
-                  <div className="block text-[0.65rem] text-center hover:text-red-600">Gallery</div>
-                </button>
+                  Gallery</button>
                 {dropdownOpen === "gallery" && (
                   <div className="absolute left-0 z-50 w-48 bg-white shadow-lg border border-gray-300">
                     <Link href="/photosGallery" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
@@ -409,9 +398,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   router.pathname === "/contact" ? "border-t-2 border-t-red-700" : ""
                 }`}
               >
-                <div className="block">Contact</div>
-                <div className="block text-[0.7rem] hover:text-red-600 text-center">Contact Us</div>
-              </Link>
+                Contact</Link>
             </div>
             
           </div>
