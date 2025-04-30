@@ -13,7 +13,7 @@ export default function Contact() {
             संपर्क माहिती
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8 mb-8">
             <div className="bg-green-50 p-6 rounded-lg border border-green-200">
               <h3 className="text-xl font-semibold text-green-800 mb-4">कार्यालय संपर्क</h3>
               
@@ -39,6 +39,10 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900 mb-1">दूरध्वनी क्रमांक</h4>
+                    <p className="text-gray-700">प्रशांत कड (सभापती): 9422763987</p>
+                    <p className="text-gray-700">योगेश बेर्डे (उपसभापती): 9422763987</p>
+                    <p className="text-gray-700">सचिव: 9422763987</p>
+                    
                     <p className="text-gray-700">कार्यालय: (02557) 221097</p>
                     <p className="text-gray-700">उपबाजार आवार (वणी): (02550) 320542</p>
                   </div>
@@ -67,7 +71,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-green-50 p-6 rounded-lg border border-green-200">
+            {/* <div className="bg-green-50 p-6 rounded-lg border border-green-200">
               <h3 className="text-xl font-semibold text-green-800 mb-4">बाजारपेठ संपर्क</h3>
               
               <div className="space-y-4">
@@ -99,10 +103,10 @@ export default function Contact() {
                   <p className="text-gray-700">उपस्थित: रोज (ऑक्टोबर ते मार्च)</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <div className="mb-8">
+          {/* <div className="mb-8">
             <h3 className="text-xl font-semibold text-green-800 mb-4">महत्त्वपूर्ण संपर्क</h3>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-300">
@@ -142,7 +146,7 @@ export default function Contact() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>

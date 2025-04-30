@@ -26,27 +26,27 @@ export default function Staff() {
                 <tbody>
                   <tr>
                     <td className="py-3 px-4 border text-center">1</td>
-                    <td className="py-3 px-4 border">जगदीश कारभारी जाधव</td>
+                    <td className="py-3 px-4 border">जगन्नाथ कारभारी जाधव</td>
                     <td className="py-3 px-4 border">सचिव</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">2</td>
-                    <td className="py-3 px-4 border">सोहन जगदीश जाधव</td>
+                    <td className="py-3 px-4 border">रोहित जगन्नाथ जाधव</td>
                     <td className="py-3 px-4 border">सीओडीटीका</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">3</td>
-                    <td className="py-3 px-4 border">संजय साहेबराव पगार</td>
+                    <td className="py-3 px-4 border">रवींद्र साहेबराव गणोरे </td>
                     <td className="py-3 px-4 border">हिशोबनीस</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">4</td>
-                    <td className="py-3 px-4 border">जयम कैलास मठे</td>
-                    <td className="py-3 px-4 border">रोडपाल</td>
+                    <td className="py-3 px-4 border">जयेश कैलास नाठे</td>
+                    <td className="py-3 px-4 border">रोखपाल</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">5</td>
-                    <td className="py-3 px-4 border">किरण जावजी जगताप</td>
+                    <td className="py-3 px-4 border">किरण बाबाजी जगताप</td>
                     <td className="py-3 px-4 border">निरीक्षक</td>
                   </tr>
                   <tr className="bg-gray-50">
@@ -56,27 +56,27 @@ export default function Staff() {
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">7</td>
-                    <td className="py-3 px-4 border">स्मिता गोरखनाथ ढाकरे</td>
+                    <td className="py-3 px-4 border">संभाजी गोरखनाथ आहेर </td>
                     <td className="py-3 px-4 border">कनिष्ठ लिपिक</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">8</td>
-                    <td className="py-3 px-4 border">टरल महादेव जाधव</td>
+                    <td className="py-3 px-4 border">दौलत मोतीराम जाधव</td>
                     <td className="py-3 px-4 border">कनिष्ठ लिपिक</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">9</td>
-                    <td className="py-3 px-4 border">शाम प्रभाकर घडे</td>
-                    <td className="py-3 px-4 border">सोस लिपिक</td>
+                    <td className="py-3 px-4 border">शाम प्रभाकर दौड</td>
+                    <td className="py-3 px-4 border">सौदे लिपिक</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">10</td>
-                    <td className="py-3 px-4 border">विशाल हरिदास मुसकरी</td>
+                    <td className="py-3 px-4 border">विशाल प्रवीण सूर्यवंशी</td>
                     <td className="py-3 px-4 border">संगणक चालक</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">11</td>
-                    <td className="py-3 px-4 border">पवन दत्तात्रय गोंड</td>
+                    <td className="py-3 px-4 border">भूषण दत्तात्रय गांगुडे </td>
                     <td className="py-3 px-4 border">कनिष्ठ लिपिक</td>
                   </tr>
                   <tr className="bg-gray-50">
@@ -86,22 +86,22 @@ export default function Staff() {
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">13</td>
-                    <td className="py-3 px-4 border">प्रशांत दिनेश जाधव</td>
+                    <td className="py-3 px-4 border">प्रशांत विजय जाधव</td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">14</td>
-                    <td className="py-3 px-4 border">गणेश तुळशीराम भरकडे</td>
+                    <td className="py-3 px-4 border">गणेश  परदेशी </td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">15</td>
-                    <td className="py-3 px-4 border">सुनील जानदेव जाधव</td>
+                    <td className="py-3 px-4 border">सुनील जाधव</td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">16</td>
-                    <td className="py-3 px-4 border">रहुल तात्या हिवरे</td>
+                    <td className="py-3 px-4 border">राहुल तात्या तीदमे </td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                 </tbody>
@@ -111,7 +111,7 @@ export default function Staff() {
 
           <div className="bg-green-50 p-4 rounded border border-green-200">
             <h3 className="text-lg font-medium text-green-800 mb-2">नोंद:</h3>
-            <p>अधिक माहितीसाठी कृपया कार्यालयीन दूरध्वनी क्रमांक 02557-222222 वर संपर्क साधावा.</p>
+            <p>अधिक माहितीसाठी कृपया कार्यालयीन दूरध्वनी क्रमांक (02557) 221097 वर संपर्क साधावा.</p>
           </div>
         </div>
       </div>

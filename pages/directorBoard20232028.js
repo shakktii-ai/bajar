@@ -10,7 +10,7 @@ export default function DirectorBoard() {
     { id: 2, name: 'मा.श्री.योगेश माधवराव बडे', position: 'उपसभापती' },
     { id: 3, name: 'मा.श्री.कैलास बाबुराव मवाळ', position: 'सदस्य' },
     { id: 4, name: 'मा.श्री.नरेंद्र कोंडाजी जाधव', position: 'सदस्य' },
-    { id: 5, name: 'मा.श्री.गांगाधर खंडेराव निरवाडे', position: 'सदस्य' },
+    { id: 5, name: 'मा.श्री.गंगाधर खंडेराव निरवाडे', position: 'सदस्य' },
     { id: 6, name: 'मा.श्री.पांडुरंग निवृत्ती गडकरी', position: 'सदस्य' },
     { id: 7, name: 'मा.श्री.बाळासाहेब विश्वनाथ पाटील', position: 'सदस्य' },
     { id: 8, name: 'मा.श्री.दत्तु नामदेव भेरे', position: 'सदस्या' },
@@ -151,7 +151,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री.गांगाधर खंडेराव निरवाडे</p>
+                  <p className="font-medium text-green-800">श्री.गंगाधर खंडेराव निरवाडे</p>
                 </div>
               </div>
 
