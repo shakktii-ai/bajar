@@ -32,7 +32,7 @@ export default function Staff() {
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">2</td>
                     <td className="py-3 px-4 border">रोहित जगन्नाथ जाधव</td>
-                    <td className="py-3 px-4 border">सीओडीटीका</td>
+                    <td className="py-3 px-4 border">सांख्यिकी</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">3</td>
@@ -96,7 +96,7 @@ export default function Staff() {
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">15</td>
-                    <td className="py-3 px-4 border">सुनील जाधव</td>
+                    <td className="py-3 px-4 border">सुशांत जाधव</td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr className="bg-gray-50">
