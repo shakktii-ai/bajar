@@ -10,21 +10,22 @@ export default function DirectorBoard() {
     { id: 2, name: 'मा.श्री.योगेश माधवराव बडे', position: 'उपसभापती' },
     { id: 3, name: 'मा.श्री.कैलास बाबुराव मवाळ', position: 'सदस्य' },
     { id: 4, name: 'मा.श्री.नरेंद्र कोंडाजी जाधव', position: 'सदस्य' },
-    { id: 5, name: 'मा.श्री.गांगाधर खांडेराव ननखाडे', position: 'सदस्य' },
-    { id: 6, name: 'मा.श्री.पाांडुरांग ननवृत्ती गडकरी', position: 'सदस्य' },
-    { id: 7, name: 'मा.श्री.बाळासाहेब नवश्वनाथ पाटील', position: 'सदस्य' },
+    { id: 5, name: 'मा.श्री.गांगाधर खंडेराव निरवाडे', position: 'सदस्य' },
+    { id: 6, name: 'मा.श्री.पांडुरंग निवृत्ती गडकरी', position: 'सदस्य' },
+    { id: 7, name: 'मा.श्री.बाळासाहेब विश्वनाथ पाटील', position: 'सदस्य' },
     { id: 8, name: 'मा.श्री.दत्तु नामदेव भेरे', position: 'सदस्या' },
-    { id: 9, name: 'मा.श्री.दत्ता पाांडुरांग शशगाडे', position: 'सदस्य' },
-    { id: 10, name: 'मा.श्री.दत्तू शिंतामण राऊत', position: 'सदस्य' },
-    { id: 11, name: 'मा.सौ.अिंचना अरुण अपसु ांदे', position: 'सदस्या' },
-    { id: 12, name: 'मा.सौ.नवमल गुलाबराव जाधव', position: 'सदस्या' },
+    { id: 9, name: 'मा.श्री.दत्ता पांडुरंग शिंगाडे ', position: 'सदस्य' },
+    { id: 10, name: 'मा.श्री.दत्तू चिंतामण राऊत', position: 'सदस्य' },
+    { id: 11, name: 'मा.सौ.अर्चना अरुण अपसुंदे ', position: 'सदस्या' },
+    { id: 12, name: 'मा.सौ.विमल गुलाबराव जाधव', position: 'सदस्या' },
     { id: 13, name: 'मा.श्री.प्रवीण एकनाथ जाधव', position: 'सदस्य' },
     { id: 14, name: 'मा.श्री.शाम गणपत बोडके', position: 'सदस्य' },
-    { id: 15, name: 'मा.श्री.दत्तात्रय रामिंांद्र पाटील', position: 'सदस्य' },
-    { id: 16, name: 'मा.श्री.नांदलाल मोतीलाल िंोपडा', position: 'सदस्य' },
-    { id: 17, name: 'मा.श्री.अनमत कमलेश िंोरनडया', position: 'सदस्य' },
-    { id: 18, name: 'मा.सहाय्यक ननबंधक सो,सह.संस्था', position: 'शासकीय सदस्य' },
-    { id: 19, name: 'मा.श्री. जगन्नाथ कारभारी जाधव', position: 'सदस्य सनचव' }
+    { id: 15, name: 'मा.श्री.दत्तात्रय रामचंद पाटील', position: 'सदस्य' },
+    { id: 16, name: 'मा.श्री.नंदलाल मोतीलाल चोपडा ', position: 'सदस्य' },
+    { id: 17, name: 'मा.श्री.अमित कमलेश चोरडिया ', position: 'सदस्य' },
+    { id: 18, name: 'मा.श्री.फय्याज मुलानी साहेब', position: 'जिल्हा उपनिबंधक , नाशिक  ' },
+    { id: 19, name: 'मा.श्री. वैभव मोरडे ', position: 'मा. सहाय्यक निबंधक , दिंडोरी ' },
+    { id: 20, name: 'मा.श्री. जगन्नाथ कारभारी जाधव', position: 'सचिव' }
   ];
 
   return (
@@ -94,7 +95,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member1.png" 
-                    alt="श्री. वामनराव शिवराम पाटील" 
+                    alt="श्री.बाळासाहेब विश्वनाथ पाटील" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -102,7 +103,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. वामनराव शिवराम पाटील</p>
+                  <p className="font-medium text-green-800">श्री.बाळासाहेब विश्वनाथ पाटील</p>
                 </div>
               </div>
 
@@ -126,7 +127,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member3.png" 
-                    alt="श्री. जीव चौधरी श्रावण" 
+                    alt="श्री.नरेंद्र कोंडाजी जाधव" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -134,7 +135,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. जीव चौधरी श्रावण</p>
+                  <p className="font-medium text-green-800">श्री. नरेंद्र कोंडाजी जाधव</p>
                 </div>
               </div>
 
@@ -142,7 +143,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member4.png" 
-                    alt="श्री. संगपाल महेंद्र शिंदत" 
+                    alt="श्री.गांगाधर खंडेराव निरवाडे" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -150,7 +151,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. संगपाल महेंद्र शिंदत</p>
+                  <p className="font-medium text-green-800">श्री.गांगाधर खंडेराव निरवाडे</p>
                 </div>
               </div>
 
@@ -159,7 +160,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member5.png" 
-                    alt="श्री. उत्तमराव रामचंद्र पाटील" 
+                    alt="श्री.दत्तात्रय रामचंद पाटील" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -167,7 +168,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. उत्तमराव रामचंद्र पाटील</p>
+                  <p className="font-medium text-green-800">श्री.दत्तात्रय रामचंद पाटील</p>
                 </div>
               </div>
 
@@ -175,7 +176,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member6new.png" 
-                    alt="श्री. सुरेश निंबाजी पवरेकर" 
+                    alt="श्री.पांडुरंग निवृत्ती गडकरी" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -183,7 +184,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. सुरेश निंबाजी पवरेकर</p>
+                  <p className="font-medium text-green-800">श्री.पांडुरंग निवृत्ती गडकरी</p>
                 </div>
               </div>
 
@@ -191,7 +192,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member7.png" 
-                    alt="श्री. संदिप बेलदारे श्रावण" 
+                    alt="श्री.प्रवीण एकनाथ जाधव" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -199,7 +200,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. संदिप बेलदारे श्रावण</p>
+                  <p className="font-medium text-green-800">श्री.प्रवीण एकनाथ जाधव</p>
                 </div>
               </div>
 
@@ -207,7 +208,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member8new.png" 
-                    alt="सौ. अंजना डल्लू आघाडे" 
+                    alt="सौ.अर्चना अरुण अपसुंदे" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -215,7 +216,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">सौ. अंजना डल्लू आघाडे</p>
+                  <p className="font-medium text-green-800">सौ.अर्चना अरुण अपसुंदे</p>
                 </div>
               </div>
 
@@ -224,7 +225,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member9new.png" 
-                    alt="सौ. विजया गुलाबराव जाधव" 
+                    alt="सौ.विमल गुलाबराव जाधव" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -232,7 +233,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">सौ. विजया गुलाबराव जाधव</p>
+                  <p className="font-medium text-green-800">सौ.विमल गुलाबराव जाधव</p>
                 </div>
               </div>
 
@@ -240,7 +241,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member10.png" 
-                    alt="श्री. राम भागवत वाटले" 
+                    alt="श्री.शाम गणपत बोडके" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -248,7 +249,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. राम भागवत वाटले</p>
+                  <p className="font-medium text-green-800">श्री.शाम गणपत बोडके</p>
                 </div>
               </div>
 
@@ -256,7 +257,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member11new.png" 
-                    alt="श्री. दत्तू मारुती शिंदले" 
+                    alt="श्री.दत्तु नामदेव भेरे" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -264,7 +265,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. दत्तू मारुती शिंदले</p>
+                  <p className="font-medium text-green-800">श्री.दत्तु नामदेव भेरे</p>
                 </div>
               </div>
 
@@ -272,7 +273,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member12.png" 
-                    alt="श्री. दत्तू शिवाजीराव राऊत" 
+                    alt="श्री.दत्ता पांडुरंग शिंगाडे " 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -280,7 +281,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. दत्तू शिवाजीराव राऊत</p>
+                  <p className="font-medium text-green-800">श्री.दत्ता पांडुरंग शिंगाडे </p>
                 </div>
               </div>
 
@@ -289,7 +290,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member13.png" 
-                    alt="श्री. संतराम मनीराम वाघेला" 
+                    alt="श्री.दत्तू चिंतामण राऊत" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -297,7 +298,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. संतराम मनीराम वाघेला</p>
+                  <p className="font-medium text-green-800">श्री.दत्तू चिंतामण राऊत</p>
                 </div>
               </div>
 
@@ -305,7 +306,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member14.png" 
-                    alt="श्री. अनिल कमलेश उटरेसिया" 
+                    alt="श्री.नंदलाल मोतीलाल चोपडा " 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -313,15 +314,15 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. अनिल कमलेश उटरेसिया</p>
+                  <p className="font-medium text-green-800">श्री.नंदलाल मोतीलाल चोपडा </p>
                 </div>
               </div>
 
               <div className="bg-white rounded-lg overflow-hidden shadow-md">
                 <div className="relative h-60 w-full">
                   <Image 
-                    src="/samiti/member15new.png" 
-                    alt="श्री. फजलराज इशाकमिया मोहम" 
+                    src="/samiti/member15neww.png" 
+                    alt="श्री.अमित कमलेश चोरडिया" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -329,7 +330,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. फजलराज इशाकमिया मोहम</p>
+                  <p className="font-medium text-green-800">श्री.अमित कमलेश चोरडिया</p>
                 </div>
               </div>
 
@@ -337,7 +338,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member16.png" 
-                    alt="श्री. ईश्वर वारके" 
+                    alt="श्री.फय्याज मुलानी साहेब" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -345,7 +346,8 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. ईश्वर वारके</p>
+                  <p className="font-medium text-green-800">श्री.फय्याज मुलानी साहेब</p>
+                  <p className="font-medium text-green-800">जिल्हा उपनिबंधक , नाशिक  </p>
                 </div>
               </div>
 
@@ -354,7 +356,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member17new.png" 
-                    alt="श्री. यशवंत दत्तात्रय जाधव" 
+                    alt="श्री.  वैभव मोरडे " 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -362,7 +364,8 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री. यशवंत दत्तात्रय जाधव</p>
+                  <p className="font-medium text-green-800">श्री. वैभव मोरडे </p>
+                  <p className="font-medium text-green-800">मा. सहाय्यक निबंधक , दिंडोरी </p>
                 </div>
               </div>
 
@@ -370,7 +373,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member18new.png" 
-                    alt="सचिव" 
+                    alt="श्री. जगन्नाथ कारभारी जाधव" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -378,6 +381,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
+                  <p className="font-medium text-green-800">श्री. जगन्नाथ कारभारी जाधव</p>
                   <p className="font-medium text-green-800">सचिव</p>
                 </div>
               </div>

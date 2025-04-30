@@ -431,8 +431,6 @@ const Navbar = () => {
           <div className="bg-gray-100 pl-4">
             <Link href="/about" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
             <Link href="/sabhapatiSpeech" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Sabhapati Speech</Link>
-            <Link href="/directorBoard20082015" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2008-2015</Link>
-            <Link href="/directorBoard20152020" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2015-2020</Link>
             <Link href="/directorBoard20232028" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Director Board 2023-2028</Link>
             <Link href="/financialReport" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Financial Report</Link>
             <Link href="/staff" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Staff</Link>
