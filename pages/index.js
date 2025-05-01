@@ -9,6 +9,10 @@ export default function Home({Logout, user}) {
   const [dropdown, setDropdown] = useState(false);
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]); // This will hold the products fetched from the API
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideCount = 4; // Total number of leader slides
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   // Toggle dropdown menu
   const toggleDropdown = () => setDropdown((prev) => !prev);
@@ -64,6 +68,45 @@ export default function Home({Logout, user}) {
   // UseEffect to fetch products when the component mounts
   useEffect(() => {
     fetchProducts();
+  }, []);
+  
+  // Manual navigation functions
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slideCount);
+  };
+  
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slideCount - 1 : prev - 1));
+  };
+  
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      // Swipe left, go to next slide
+      nextSlide();
+    }
+    
+    if (touchStart - touchEnd < -75) {
+      // Swipe right, go to previous slide
+      prevSlide();
+    }
+  };
+  
+  // Automatic slider for the mobile leaders carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideCount);
+    }, 3000); // Change slide every 3 seconds
+    
+    return () => clearInterval(interval);
   }, []);
   return (
     <>
@@ -138,6 +181,132 @@ export default function Home({Logout, user}) {
           </div>
           <div className="h-6 border-l border-gray-300 hidden sm:block"></div>
           <div className="px-4 py-1.5 bg-green-50 text-green-800 rounded-full text-sm font-medium">आजच्या दिवशी जाहिरात द्या, आजच प्रकाशित होएल</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Government Leaders Section */}
+    <div className="py-6 bg-white border-l-4 border-green-600">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-green-800">महाराष्ट्र राज्य नेतृत्व</h2>
+          <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">LEADERSHIP</div>
+        </div>
+
+        {/* Desktop View - Regular Grid */}
+        <div className="hidden md:grid grid-cols-4 gap-8">
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+            <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
+              <Image src="/images/leaders/devendra_fadnavis.png" alt="Shri. Devendra Fadnavis" layout="fill" objectFit="contain" className="rounded-lg" />
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg">श्री. देवेंद्र फडणवीस</h3>
+            <p className="text-sm text-gray-600">मा. मुख्यमंत्री, महाराष्ट्र राज्य</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+            <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
+              <Image src="/images/leaders/eknath_shinde.png" alt="Shri. Eknath Shinde" layout="fill" objectFit="contain" className="rounded-lg" />
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg">श्री. एकनाथ शिंदे</h3>
+            <p className="text-sm text-gray-600">मा. उपमुख्यमंत्री, महाराष्ट्र राज्य</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+            <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
+              <Image src="/images/leaders/ajit_pawar.png" alt="Shri. Ajit Pawar" layout="fill" objectFit="contain" className="rounded-lg" />
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg">श्री. अजित पवार</h3>
+            <p className="text-sm text-gray-600">मा. उपमुख्यमंत्री, महाराष्ट्र राज्य</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+            <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
+              <Image src="/images/leaders/jaykumar_rawal.png" alt="Shri. Jaykumar Rawal" layout="fill" objectFit="contain" className="rounded-lg" />
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg">श्री. जयकुमार रावल</h3>
+            <p className="text-sm text-gray-600">मा. विपणन व प्रोटोकॉल मंत्री, महाराष्ट्र राज्य</p>
+          </div>
+        </div>
+
+        {/* Mobile View - Carousel */}
+        <div className="block md:hidden">
+          <div className="relative overflow-hidden p-4 bg-gray-50 rounded-xl shadow-sm mx-auto max-w-md">
+            {/* No arrow controls as requested */}
+            
+            {/* Mobile leaders carousel */}
+            <div 
+              className="overflow-hidden" 
+              onTouchStart={handleTouchStart} 
+              onTouchMove={handleTouchMove} 
+              onTouchEnd={handleTouchEnd}
+            >
+              {/* All slides with absolute positioning and opacity transitions */}
+              <div className="relative h-32 sm:h-36"> 
+                {/* Slide 1 */}
+                <div 
+                  className={`absolute inset-0 flex flex-row items-center transition-opacity duration-700 ease-in-out ${currentSlide === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                >
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-lg flex-shrink-0">
+                    <Image src="/images/leaders/devendra_fadnavis.png" alt="Shri. Devendra Fadnavis" layout="fill" objectFit="contain" className="rounded-lg bg-slate-50" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-gray-900 text-lg">Shri. Devendra Fadnavis</h3>
+                    <p className="text-sm text-gray-600">Hon'ble Chief Minister,<br />Maharashtra State</p>
+                  </div>
+                </div>
+                
+                {/* Slide 2 */}
+                <div 
+                  className={`absolute inset-0 flex flex-row items-center transition-opacity duration-700 ease-in-out ${currentSlide === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                >
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-lg flex-shrink-0">
+                    <Image src="/images/leaders/eknath_shinde.png" alt="Shri. Eknath Shinde" layout="fill" objectFit="contain" className="rounded-lg bg-slate-50" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-gray-900 text-lg">Shri. Eknath Shinde</h3>
+                    <p className="text-sm text-gray-600">Hon'ble Deputy Chief Minister,<br />Maharashtra State</p>
+                  </div>
+                </div>
+                
+                {/* Slide 3 */}
+                <div 
+                  className={`absolute inset-0 flex flex-row items-center transition-opacity duration-700 ease-in-out ${currentSlide === 2 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                >
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-lg flex-shrink-0">
+                    <Image src="/images/leaders/ajit_pawar.png" alt="Shri. Ajit Pawar" layout="fill" objectFit="contain" className="rounded-lg bg-slate-50" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-gray-900 text-lg">Shri. Ajit Pawar</h3>
+                    <p className="text-sm text-gray-600">Hon'ble Deputy Chief Minister,<br />Maharashtra State</p>
+                  </div>
+                </div>
+                
+                {/* Slide 4 */}
+                <div 
+                  className={`absolute inset-0 flex flex-row items-center transition-opacity duration-700 ease-in-out ${currentSlide === 3 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                >
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-lg flex-shrink-0">
+                    <Image src="/images/leaders/jaykumar_rawal.png" alt="Shri. Jaykumar Rawal" layout="fill" objectFit="contain" className="rounded-lg bg-slate-50" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-gray-900 text-lg">Shri. Jaykumar Rawal</h3>
+                    <p className="text-sm text-gray-600">Hon'ble Minister of Marketing and Protocol,<br />Maharashtra State</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Scroll indicator dots */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {[...Array(slideCount)].map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`w-2 h-2 rounded-full ${index === currentSlide ? 'bg-green-600' : 'bg-gray-300'} transition-colors duration-300 cursor-pointer`}
+                  onClick={() => setCurrentSlide(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
