@@ -7,10 +7,10 @@ export default function DirectorBoard() {
   // Board members data
   const boardMembers = [
     { id: 1, name: 'मा.श्री.प्रशाांत प्रकाश कड', position: 'सभापती' },
-    { id: 2, name: 'मा.श्री.योगेश माधवराव बडे', position: 'उपसभापती' },
+    { id: 2, name: 'मा.श्री.योगेश माधवराव बर्डे', position: 'उपसभापती' },
     { id: 3, name: 'मा.श्री.कैलास बाबुराव मवाळ', position: 'सदस्य' },
     { id: 4, name: 'मा.श्री.नरेंद्र कोंडाजी जाधव', position: 'सदस्य' },
-    { id: 5, name: 'मा.श्री.गंगाधर खंडेराव निरवाडे', position: 'सदस्य' },
+    { id: 5, name: 'मा.श्री.गंगाधर खंडेराव निखाडे', position: 'सदस्य' },
     { id: 6, name: 'मा.श्री.पांडुरंग निवृत्ती गडकरी', position: 'सदस्य' },
     { id: 7, name: 'मा.श्री.बाळासाहेब विश्वनाथ पाटील', position: 'सदस्य' },
     { id: 8, name: 'मा.श्री.दत्तु नामदेव भेरे', position: 'सदस्या' },
@@ -143,7 +143,7 @@ export default function DirectorBoard() {
                 <div className="relative h-60 w-full">
                   <Image 
                     src="/samiti/member4.png" 
-                    alt="श्री.गांगाधर खंडेराव निरवाडे" 
+                    alt="श्री.गांगाधर खंडेराव निखाडे" 
                     fill
                     sizes="(max-width: 768px) 100vw, 300px"
                     priority
@@ -151,7 +151,7 @@ export default function DirectorBoard() {
                   />
                 </div>
                 <div className="p-3 text-center">
-                  <p className="font-medium text-green-800">श्री.गंगाधर खंडेराव निरवाडे</p>
+                  <p className="font-medium text-green-800">श्री.गंगाधर खंडेराव निखाडे</p>
                 </div>
               </div>
 
