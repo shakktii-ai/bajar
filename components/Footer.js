@@ -14,9 +14,9 @@ const Footer = () => {
          {/* Logo and Contact */}
          <div className="col-span-1 md:col-span-1">
            <h3 className="text-xl font-bold mb-4">दिंडोरी कृषि उत्पन्न बाजार समिती</h3>
-           <p className="text-sm text-green-100 mb-2">निंबवडी रोड, दिंडोरी,</p>
+           <p className="text-sm text-green-100 mb-2">निळवंडी रोड, दिंडोरी,</p>
            <p className="text-sm text-green-100 mb-2">ता. दिंडोरी, जि. नाशिक - 422202</p>
-           <p className="text-sm text-green-100 mb-2">स्थापना: ५ जानेवारी १९८५</p>
+           <p className="text-sm text-green-100 mb-2">स्थापना: ५ जानेवारी १९८९</p>
            <p className="text-sm text-green-100 mt-4 mb-2">फोन: (02557) 221097</p>
            <p className="text-sm text-green-100">ईमेल: am_dindori@msamb.com</p>
          </div>

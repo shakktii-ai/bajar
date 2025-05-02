@@ -6,7 +6,7 @@ export default function MarketDetails() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-center text-green-800 mb-8">
-            दिंडोरी कृषि उत्पन्न बाजार सषमती.षज.नाषिक
+            दिंडोरी कृषि उत्पन्न बाजार समिती
           </h1>
           <h2 className="text-2xl font-semibold text-center text-green-700 mb-6">
             बाजार तपशील
@@ -120,16 +120,16 @@ export default function MarketDetails() {
           <div className="mb-10">
             <h3 className="text-xl font-semibold text-green-700 mb-4">आवक व वक्री :-</h3>
             <p className="mb-4">
-              वरील ननयंनत्रत केलेल्या शेतमाला पासून बाजार सनमतीस 2022-2023 या आनथक वषात मुख्य व दुय्यम बाजार आवारात खालील प्रमाणे आवक झालेली आहे.
+            वरील नोंदणीकृत शेतमालापासून बाजार समितीस 2022-2023 या आर्थिक वर्षात मुख्य व दुय्यम बाजार आवारात खालील प्रमाणे आवक झालेली आहे.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                   <tr className="bg-green-700 text-white text-center">
                     <th className="py-3 px-4 border">अ.नं.</th>
-                    <th className="py-3 px-4 border">िेतमालाचा प्रकार</th>
-                    <th className="py-3 px-4 border">आवक (क्क्वटल मध्ये)</th>
-                    <th className="py-3 px-4 border">दकमत</th>
+                    <th className="py-3 px-4 border">शेतमालाचा प्रकार</th>
+                    <th className="py-3 px-4 border">आवक (क्विंटलमध्ये किम्मत)</th>
+                    <th className="py-3 px-4 border">किम्मत</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,17 +164,17 @@ export default function MarketDetails() {
 
           {/* License Holders */}
           <div className="mb-10">
-            <h3 className="text-xl font-semibold text-green-700 mb-4">बाजार सषमतीच्या परवानाधारकांची संख्या:-</h3>
+            <h3 className="text-xl font-semibold text-green-700 mb-4">बाजार समितीच्या परवानाधारकांची संख्या:-</h3>
             <p className="mb-4">
-              बाजार सनमतीच्या सन 2022-2023 या वषामध्ये खालील प्रमाणे अनुज्ञप्तत देण्यांत आलेल्या आहेत.
+              बाजार समितीच्या सन 2022-2023 या वषामध्ये खालील प्रमाणे अनुज्ञप्तत देण्यांत आलेल्या आहेत.
             </p>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                   <tr className="bg-green-700 text-white text-center">
                     <th className="py-3 px-4 border">अ.नं.</th>
-                    <th className="py-3 px-4 border">अनुज्ञप्ततचा प्रकार</th>
-                    <th className="py-3 px-4 border">अनुज्ञप्ततधारकांची संख्या</th>
+                    <th className="py-3 px-4 border">अनुज्ञप्तिचा प्रकार</th>
+                    <th className="py-3 px-4 border">अनुज्ञप्तिधारकांची संख्या</th>
                   </tr>
                 </thead>
                 <tbody>

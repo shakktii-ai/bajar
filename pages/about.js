@@ -53,7 +53,7 @@ export default function About() {
                 <div className="bg-gray-50 p-4 rounded">
                   <h4 className="font-medium mb-2">मुख्य मार्केट यार्ड:</h4>
                   <p>दिंडोरी कृषि उत्पन्न बाजार समिती</p>
-                  <p>निंबवडी रोड, दिंडोरी,</p>
+                  <p>निळवंडी रोड, दिंडोरी,</p>
                   <p>ता. दिंडोरी, जि. नाशिक - 422202</p>
                   <p>स्थापना: ५ जानेवारी १९८९</p>
                 </div>
