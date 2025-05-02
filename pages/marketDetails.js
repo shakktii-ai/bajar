@@ -14,7 +14,7 @@ export default function MarketDetails() {
 
           {/* Market Areas Section */}
           <div className="mb-10">
-            <h3 className="text-xl font-semibold text-green-700 mb-4">बाजार सनमतीचे मुख्् व उप बाजार आवारांचे क्षेत्र</h3>
+            {/* <h3 className="text-xl font-semibold text-green-700 mb-4">बाजार सनमतीचे मुख्् व उप बाजार आवारांचे क्षेत्र</h3> */}
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
