@@ -121,7 +121,7 @@ export default function Home({Logout, user}) {
     <div className="text-center px-4 py-10 md:py-16 lg:py-16 bg-gradient-to-b from-green-50 to-white">
       <div className="flex justify-center flex-col items-center font-bold text-3xl md:text-5xl lg:text-6xl">
         <h1 className="block text-green-800">दिंडोरी कृषि उत्पन्न बाजार समिती</h1>
-        <h2 className="text-green-700 mt-2">Dindori krushi Utpann Bajar Samiti</h2>
+        <h2 className="text-green-700 mt-2">Dindori Krushi Utpann Bajar Samiti</h2>
       </div>
       <h2 className="text-sm md:text-base block mt-6 md:mt-8 max-w-3xl mx-auto text-gray-700">
         A modern agricultural market committee providing quality services to farmers and traders across the Dindori region.
