@@ -241,7 +241,7 @@ const Navbar = () => {
             />
           </div>
           <div className="ml-4 text-center">
-            <h1 className="text-xl md:text-2xl font-bold text-green-800">krushi Utpann Bajar Samiti</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-green-800">Krushi Utpann Bajar Samiti</h1>
             <p className="text-sm md:text-md text-gray-600">Agricultural Market Committee</p>
           </div>
         </div>
