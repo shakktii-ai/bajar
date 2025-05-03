@@ -91,7 +91,7 @@ export default function MarketDetails() {
 
           {/* Controlled Farm Produce */}
           <div className="mb-10">
-            <h3 className="text-xl font-semibold text-green-700 mb-4">नियंत्रित शेतीमाल </h3>
+            <h3 className="text-xl font-semibold text-green-700 mb-4">नियंत्रित शेतीमाल</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
               {[
                 'कपाशी', 'भुईमुग', 'शेंगा', 'गुळ', 'हरभरा', 'कांदा', 'बिािा',

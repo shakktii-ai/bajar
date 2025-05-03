@@ -325,7 +325,7 @@ const Navbar = () => {
                     <Link href="/marketDetails" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                     Market Details
                     </Link>
-                    <Link href="/marketPremises" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
+                    {/* <Link href="/marketPremises" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                     Market Premises
                     </Link>
                     <Link href="/marketArea" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
@@ -339,7 +339,7 @@ const Navbar = () => {
                     </Link>
                     <Link href="/facilities" className="block px-4 py-2 border-b-2 hover:bg-gray-100">
                     Facilities
-                    </Link>
+                    </Link> */}
                   </div>
                 )}
               </div>
@@ -451,11 +451,11 @@ const Navbar = () => {
         {dropdownOpen === "market" && (
           <div className="bg-gray-100 pl-4">
             <Link href="/marketDetails" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Details</Link>
-            <Link href="/marketPremises" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Premises</Link>
+            {/* <Link href="/marketPremises" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Premises</Link>
             <Link href="/marketArea" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Area</Link>
             <Link href="/marketFeatures" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Market Features</Link>
             <Link href="/developmentWork" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Development Work</Link>
-            <Link href="/facilities" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Facilities</Link>
+            <Link href="/facilities" className="block px-4 py-2 hover:bg-gray-200" onClick={() => setMobileMenuOpen(false)}>Facilities</Link> */}
           </div>
         )}
       </div>
