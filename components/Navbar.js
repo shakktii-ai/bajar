@@ -1135,7 +1135,7 @@ const Navbar = () => {
   .scrolling-marquee {
     display: flex;
     gap: 1rem;
-    animation: marquee 35s linear infinite;
+    animation: marquee 40s linear infinite;
     
   }
 
@@ -1200,51 +1200,40 @@ const Navbar = () => {
   }
 `}
 </style>
+<div className="bg-green-300">
+<div className="scrolling-marquee ">
+  {Array.isArray(products) && products.length > 0 && (
+    <>
+      {[...products, ...products].map((product, index) => {
+        const isFromDailyProducts = product.product && product.product._id;
+        const productData = isFromDailyProducts ? product.product : product;
+        const priceMin = product.PriceMin;
+        const priceMax = product.PriceMax;
 
-<div className="marquee-container">
-  <div className="scrolling-marquee">
-    {Array.isArray(products) && products.length > 0 && (
-      <>
-        {products.map((product) => {
-          const isFromDailyProducts = product.product && product.product._id;
-          const productData = isFromDailyProducts ? product.product : product;
-          const priceMin = product.PriceMin;
-          const priceMax = product.PriceMax;
-
-          return (
-            <div
-              key={product._id}
-              className="product-card"
-            >
-              <div className="content text-center">
-                <h3>
-                  {productData.productNameMarathi || productData.productNameEnglish}
-                </h3>
-                <p>
-                  {productData.productNameEnglish}
-                </p>
-              </div>
-              <div className="bg-gray-50  rounded-lg ">
-                <p className="text-gray-500 text-xxs md:text-xs">
-                  अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
-                </p>
-                <p className="text-gray-500 text-xxs md:text-xs">
-                  न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
-                </p>
-                {/* <p className="text-gray-700 text-xxs md:text-xs mt-1">
-                  औसत: <span className="text-gray-800 font-bold">₹{calculateAvgPrice(priceMax, priceMin)}</span>
-                </p>
-                <p className="text-xxxs text-gray-400 mt-1">
-                  (प्रति {productData.ProductInUnit || "किलो"})
-                </p> */}
-              </div>
+        return (
+          <div key={`${product._id}-${index}`} className="product-card">
+            <div className="content text-center">
+              <h3>
+                {productData.productNameMarathi || productData.productNameEnglish}
+              </h3>
+              {/* <p>{productData.productNameEnglish}</p> */}
             </div>
-          );
-        })}
-      </>
-    )}
-  </div>
+            <div className="bg-gray-50 rounded-lg">
+              <p className="text-gray-500 text-xxs md:text-xs">
+                अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
+              </p>
+              <p className="text-gray-500 text-xxs md:text-xs">
+                न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </>
+  )}
 </div>
+</div>
+
 
 
 
