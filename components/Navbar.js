@@ -1200,7 +1200,7 @@ const Navbar = () => {
   }
 `}
 </style>
-<div className="bg-green-300">
+<div className="bg-green-300 overflow-x-hidden">
 <div className="scrolling-marquee bg-transparent ">
   {Array.isArray(products) && products.length > 0 && (
     <>
