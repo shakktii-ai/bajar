@@ -1122,32 +1122,33 @@ const Navbar = () => {
       </header>
 
       {/* Product Rates Section */}
-      <style jsx>
-{`
+      <style jsx>{`
   .marquee-container {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    background: transparent;
     overflow: hidden;
-    padding: 0.1rem 0;
-    margin:0.5rem
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+    
   }
 
   .scrolling-marquee {
     display: flex;
     gap: 1rem;
-    animation: marquee 40s linear infinite;
-    
+    animation: marquee 60s linear infinite; /* Slower speed */
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    width: max-content;
   }
 
   .product-card {
     background: transparent;
     border-radius: 12px;
     padding: 0.5rem;
-    min-width: 150px;
+    min-width: 160px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    transition: transform 0.2s ease;
+    transition: transform 2s ease;
+    flex-shrink: 0;
   }
 
   .product-card:hover {
@@ -1157,7 +1158,6 @@ const Navbar = () => {
   .product-card .content {
     display: flex;
     flex-direction: column;
-      
   }
 
   .product-card h3 {
@@ -1173,66 +1173,60 @@ const Navbar = () => {
     margin: 0;
   }
 
-  .price-container {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem;
-    border-radius: 8px;
-    margin-top: 0.5rem;
-  }
-
-  .price-container p {
-    margin: 0;
-    font-size: 0.75rem;
-    line-height: 1.2;
-  }
-
-  .price-container span {
-    font-weight: 600;
-  }
-
   @keyframes marquee {
     0% {
       transform: translateX(100%);
     }
-    100% {
+    99% {
       transform: translateX(-100%);
     }
+    100% {
+      transform: translateX(100%); /* Immediately resets to the start */
+    }
   }
-`}
-</style>
-<div className="bg-green-300 overflow-x-hidden">
-<div className="scrolling-marquee bg-transparent ">
-  {Array.isArray(products) && products.length > 0 && (
-    <>
-      {[...products, ...products].map((product, index) => {
-        const isFromDailyProducts = product.product && product.product._id;
-        const productData = isFromDailyProducts ? product.product : product;
-        const priceMin = product.PriceMin;
-        const priceMax = product.PriceMax;
+`}</style>
 
-        return (
-          <div key={`${product._id}-${index}`} className="product-card ">
-            <div className="content text-center">
-              <h3>
-                {productData.productNameMarathi || productData.productNameEnglish}
-              </h3>
-              {/* <p>{productData.productNameEnglish}</p> */}
-            </div>
-            <div className="bg-transparent rounded-lg">
-              <p className="text-gray-500 text-xxs md:text-xs">
-                अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
-              </p>
-              <p className="text-gray-500 text-xxs md:text-xs">
-                न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
-              </p>
-            </div>
-          </div>
-        );
-      })}
-    </>
-  )}
+<div className="bg-green-300 overflow-hidden">
+  <div className="marquee-container">
+    <div className="scrolling-marquee">
+      {Array.isArray(products) && products.length > 0 && (
+        <>
+          {[...Array(Math.ceil(30 / products.length))] // Repeat enough to fill all screens
+            .flatMap((_, repeatIndex) =>
+              products.map((product, index) => {
+                const isFromDailyProducts = product.product && product.product._id;
+                const productData = isFromDailyProducts ? product.product : product;
+                const priceMin = product.PriceMin;
+                const priceMax = product.PriceMax;
+
+                return (
+                  <div
+                    key={`${product._id}-${index}-${repeatIndex}`}
+                    className="product-card"
+                  >
+                    <div className="content text-center">
+                      <h3>
+                        {productData.productNameMarathi || productData.productNameEnglish}
+                      </h3>
+                    </div>
+                    <div className="bg-transparent rounded-lg">
+                      <p className="text-gray-500 text-xxs md:text-xs">
+                        अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
+                      </p>
+                      <p className="text-gray-500 text-xxs md:text-xs">
+                        न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+        </>
+      )}
+    </div>
+  </div>
 </div>
-</div>
+
 
 
 
