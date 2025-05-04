@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,35 +11,35 @@ const Carousel = () => {
   const ads = [
     {
       id: 1,
-      src: '/ads/ad1.jpg', // Create these in your public directory
+      src: '/gallery/IMG-20250502-WA0057.jpg', // Image path in public directory
       alt: 'Advertisement 1',
       title: 'बाजार स्पेशल ऑफर',
       link: '/special-offers'
     },
     {
       id: 2,
-      src: '/ads/ad2.jpg',
+      src: '/gallery/IMG-20250502-WA0066.jpg',
       alt: 'Advertisement 2',
       title: 'नवीन उत्पादने',
       link: '/new-products'
     },
     {
       id: 3,
-      src: '/ads/ad3.jpg',
+      src: '/gallery/IMG-20250502-WA0116.jpg',
       alt: 'Advertisement 3',
       title: 'मोसमी फळे आणि भाज्या',
       link: '/seasonal-products'
     },
     {
       id: 4,
-      src: 'https://cdn3.pixelcut.app/7/20/uncrop_hero_bdf08a8ca6.jpg',
+      src: '/gallery/IMG-20250502-WA0100.jpg',
       alt: 'Advertisement 4',
       title: 'श्रेष्ठ दर्जाची उत्पादने',
       link: '/quality-products'
     },
     {
       id: 5,
-      src: 'https://media.istockphoto.com/id/1127245421/photo/woman-hands-praying-for-blessing-from-god-on-sunset-background.jpg?s=1024x1024&w=is&k=20&c=faoiFapQkhucuLuor9gBnblJ4KJpqvEgariqalvzRas=',
+      src: '/gallery/IMG-20250502-WA0097.jpg',
       alt: 'Advertisement 5',
       title: 'ताजी फळे',
       link: '/fresh-fruits'
@@ -115,43 +116,33 @@ const Carousel = () => {
       </div>
       
       {/* Main carousel container with enhanced transitions */}
-      <div className="relative h-full overflow-hidden rounded-lg">
+      <div className="relative h-[15rem] sm:h-[20rem] md:h-[25rem] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0_2)] border-4 border-white">
         <div 
           className={`absolute inset-0 flex transform transition-all duration-700 ${isTransitioning ? 'ease-out' : 'ease-in-out'}`}
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {ads.map((ad, index) => (
-            <div key={ad.id} className="relative flex-shrink-0 w-full h-full overflow-hidden">
-              {/* Image with hover zoom effect */}
-              <div className="absolute inset-0 transition-transform duration-10000 group-hover:scale-105">
-                <img
+            <div key={ad.id} className="relative flex-shrink-0 w-full h-full overflow-hidden bg-gray-100">
+              <div className="absolute inset-0 bg-gray-100"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none"></div>
+              {/* Image container with hover zoom effect */}
+              <div className="relative w-full h-full transition-transform duration-1000 group-hover:scale-[1.02]">
+                <Image
                   src={ad.src}
                   alt={ad.alt}
-                  className="w-full h-full object-cover transition-all duration-700"
-                  onError={() => handleImageError(index)}
+                  fill
+                  className="object-cover transition-all duration-700"
+                  onError={() => {
+                    console.error(`Image failed to load: ${ad.src}`);
+                    handleImageError(index);
+                  }}
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
               
               {/* Advertisement title/content overlay */}
-              <a 
-                href={ad.link} 
-                className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent
-                         pt-16 pb-6 px-8 flex flex-col items-start justify-end z-10 transform transition-all duration-500
-                         group-hover:pb-8"
-              >
-                <div className="transform transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-2">{ad.title}</h3>
-                  <div className="inline-flex items-center text-white/80 text-sm hover:text-white transition-colors">
-                    <span>अधिक माहिती</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                
-                {/* Decorative line */}
-                <div className="absolute bottom-0 left-0 w-0 h-1 bg-green-500 group-hover:w-full transition-all duration-700 ease-out"></div>
-              </a>
+              
             </div>
           ))}
         </div>
