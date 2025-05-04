@@ -1140,7 +1140,7 @@ const Navbar = () => {
   }
 
   .product-card {
-    background: white;
+    background: transparent;
     border-radius: 12px;
     padding: 0.5rem;
     min-width: 150px;
@@ -1201,7 +1201,7 @@ const Navbar = () => {
 `}
 </style>
 <div className="bg-green-300">
-<div className="scrolling-marquee ">
+<div className="scrolling-marquee bg-transparent ">
   {Array.isArray(products) && products.length > 0 && (
     <>
       {[...products, ...products].map((product, index) => {
@@ -1211,14 +1211,14 @@ const Navbar = () => {
         const priceMax = product.PriceMax;
 
         return (
-          <div key={`${product._id}-${index}`} className="product-card">
+          <div key={`${product._id}-${index}`} className="product-card ">
             <div className="content text-center">
               <h3>
                 {productData.productNameMarathi || productData.productNameEnglish}
               </h3>
               {/* <p>{productData.productNameEnglish}</p> */}
             </div>
-            <div className="bg-gray-50 rounded-lg">
+            <div className="bg-transparent rounded-lg">
               <p className="text-gray-500 text-xxs md:text-xs">
                 अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
               </p>
