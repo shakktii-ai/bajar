@@ -257,7 +257,7 @@ export default function DailyRate() {
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 bg-gray-50 p-4 rounded-lg">
             <div className="flex items-center mb-4 sm:mb-0">
               <FaCalendarAlt className="text-green-600 mr-2" />
-              <label className="font-medium text-gray-700 mr-2">दिनांक निवडा:</label>
+              <label className="font-medium text-gray-700 mr-2 ">दिनांक निवडा:</label>
               <input
                 type="date"
                 value={selectedDate}
