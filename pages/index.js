@@ -111,8 +111,8 @@ export default function Home({Logout, user}) {
   return (
     <>
       <Head>
-        <title>दिंडोरी कृषि उत्पन्न बाजार समिती</title>
-        <meta name="description" content="The official website of Dindori krushi Utpann Bajar Samiti - providing quality services to farmers and traders in Dindori region" />
+        <title>दिंडोरी कृषि उत्पन्न बाजार समिती </title>
+        <meta name="description" content="दिंडोरी कृषी उत्पन्न बाजार समितीची अधिकृत वेबसाइट - दिंडोरी प्रदेशातील शेतकरी आणि व्यापाऱ्यांना दर्जेदार सेवा प्रदान करते." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
