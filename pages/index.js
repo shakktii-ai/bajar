@@ -2,17 +2,27 @@ import Head from "next/head";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaLeaf, FaHandshake, FaChartLine, FaBuilding, FaCalendarAlt, FaUsers } from "react-icons/fa";
+import { FaLeaf, FaHandshake, FaChartLine, FaBuilding, FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaFilter } from "react-icons/fa";
 import Carousel from "@/components/carousel";
 
 export default function Home({Logout, user}) {
   const [dropdown, setDropdown] = useState(false);
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]); // This will hold the products fetched from the API
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedMarket, setSelectedMarket] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideCount = 4; // Total number of leader slides
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  
+  // Market filter options
+  const marketOptions = [
+    { value: '', label: 'सर्व बाजार' },
+    { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
+    { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+   
+  ];
 
   // Toggle dropdown menu
   const toggleDropdown = () => setDropdown((prev) => !prev);
@@ -42,10 +52,41 @@ export default function Home({Logout, user}) {
       
       console.log('Today\'s products:', data);
       setProducts(data); // Set today's products
+      setFilteredProducts(data); // Initialize filtered products with all data
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
+  
+  // Filter products based on selected market
+  useEffect(() => {
+    console.log("Market filter changed to:", selectedMarket);
+    console.log("Total products before filtering:", products.length);
+    
+    if (selectedMarket && selectedMarket !== '') {
+      const filtered = products.filter(item => {
+        // Check item structure and get marketName depending on the format
+        let marketName;
+        
+        if (item.product) {
+          // DailyProducts format
+          marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        } else {
+          // Direct Products format
+          marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        }
+        
+        console.log("Item market name:", marketName, "comparing with", selectedMarket);
+        return marketName === selectedMarket;
+      });
+      
+      console.log("Filtered products after market filter:", filtered.length);
+      setFilteredProducts(filtered);
+    } else {
+      console.log("No market filter, showing all products");
+      setFilteredProducts(products);
+    }
+  }, [selectedMarket, products]);
 
   // Add a product to the cart
   const addToCart = (product) => {
@@ -118,19 +159,23 @@ export default function Home({Logout, user}) {
       </Head>
 
     {/* Hero Section */}
-    <div className="text-center px-4 py-10 md:py-16 lg:py-16 bg-gradient-to-b from-green-50 to-white">
-      <div className="flex justify-center flex-col items-center font-bold text-3xl md:text-5xl lg:text-6xl">
+    <div className="text-center px-4 py-10 md:py-16 lg:py-16 bg-gradient-to-b from-green-50 to-white overflow-hidden">
+      <div className="flex justify-center flex-col items-center font-bold text-3xl md:text-5xl lg:text-6xl" data-aos="fade-down" data-aos-delay="100">
         <h1 className="block text-green-800">दिंडोरी कृषि उत्पन्न बाजार समिती</h1>
         <h2 className="text-green-700 mt-2">Dindori Krushi Utpann Bajar Samiti</h2>
       </div>
-      <h2 className="text-sm md:text-base block mt-6 md:mt-8 max-w-3xl mx-auto text-gray-700">
+      <h2 
+        className="text-sm md:text-base block mt-6 md:mt-8 max-w-3xl mx-auto text-gray-700"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
         A modern agricultural market committee providing quality services to farmers and traders across the Dindori region.
       </h2>
-      <div className="mt-8 flex justify-center space-x-4">
-        <Link href="/daily-rate" className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow-md transition-all duration-300 font-medium">
+      <div className="mt-8 flex justify-center space-x-4" data-aos="zoom-in" data-aos-delay="500">
+        <Link href="/daily-rate" className="bg-green-600 hover:bg-green-700 hover:scale-105 text-white px-5 py-2 rounded-lg shadow-md transition-all duration-300 font-medium">
           दैनिक बाजार दर
         </Link>
-        <Link href="/contact" className="bg-white hover:bg-gray-100 text-green-700 border border-green-600 px-5 py-2 rounded-lg shadow-md transition-all duration-300 font-medium">
+        <Link href="/contact" className="bg-white hover:bg-gray-100 hover:scale-105 text-green-700 border border-green-600 px-5 py-2 rounded-lg shadow-md transition-all duration-300 font-medium">
           संपर्क करा
         </Link>
       </div>
@@ -139,11 +184,11 @@ export default function Home({Logout, user}) {
     {/* Advertisement Carousel Section */}
     <div className="py-10 px-4 bg-gradient-to-b from-white to-green-50">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6" data-aos="fade-up">
           <div className="flex items-center mb-4 md:mb-0">
-            <div className="w-1.5 h-10 bg-green-600 rounded-full mr-3"></div>
-            <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-500">जाहिराती</h2>
-            <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">FEATURED</div>
+            <div className="w-1.5 h-10 bg-green-600 rounded-full mr-3" data-aos="fade-right" data-aos-delay="100"></div>
+            <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-500" data-aos="fade-up" data-aos-delay="200">जाहिराती</h2>
+            <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full" data-aos="fade-left" data-aos-delay="300">FEATURED</div>
           </div>
           <a href="/contact" className="group bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center">
             <span className="mr-2">जाहिरात देण्यासाठी संपर्क करा</span>
@@ -188,14 +233,14 @@ export default function Home({Logout, user}) {
     {/* Government Leaders Section */}
     <div className="py-6 bg-white border-l-4 border-green-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center mb-8">
+        <div className="flex items-center mb-8" data-aos="fade-right">
           <h2 className="text-2xl md:text-3xl font-bold text-green-800">महाराष्ट्र राज्य नेतृत्व</h2>
-          <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">LEADERSHIP</div>
+          <div className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full" data-aos="zoom-in" data-aos-delay="200">LEADERSHIP</div>
         </div>
 
         {/* Desktop View - Regular Grid */}
         <div className="hidden md:grid grid-cols-4 gap-8">
-          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center" data-aos="fade-up" data-aos-delay="100">
             <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
               <Image src="/images/leaders/devendra_fadnavis.png" alt="Shri. Devendra Fadnavis" layout="fill" objectFit="contain" className="rounded-lg" />
             </div>
@@ -203,7 +248,7 @@ export default function Home({Logout, user}) {
             <p className="text-sm text-gray-600">मा. मुख्यमंत्री, महाराष्ट्र राज्य</p>
           </div>
 
-          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center" data-aos="fade-up" data-aos-delay="200">
             <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
               <Image src="/images/leaders/eknath_shinde.png" alt="Shri. Eknath Shinde" layout="fill" objectFit="contain" className="rounded-lg" />
             </div>
@@ -211,7 +256,7 @@ export default function Home({Logout, user}) {
             <p className="text-sm text-gray-600">मा. उपमुख्यमंत्री, महाराष्ट्र राज्य</p>
           </div>
 
-          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center" data-aos="fade-up" data-aos-delay="300">
             <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
               <Image src="/images/leaders/ajit_pawar.png" alt="Shri. Ajit Pawar" layout="fill" objectFit="contain" className="rounded-lg" />
             </div>
@@ -219,7 +264,7 @@ export default function Home({Logout, user}) {
             <p className="text-sm text-gray-600">मा. उपमुख्यमंत्री, महाराष्ट्र राज्य</p>
           </div>
 
-          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow transition-all duration-300 text-center">
+          <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center" data-aos="fade-up" data-aos-delay="400">
             <div className="relative mx-auto w-48 h-48 overflow-hidden mb-4">
               <Image src="/images/leaders/jaykumar_rawal.png" alt="Shri. Jaykumar Rawal" layout="fill" objectFit="contain" className="rounded-lg" />
             </div>
@@ -312,54 +357,78 @@ export default function Home({Logout, user}) {
     </div>
     
     {/* Mission & Overview Section */}
-    <div className="py-12 bg-gray-50">
+    <div className="py-12 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12" data-aos="fade-up">
           <h2 className="text-3xl font-bold text-green-800">आमच्याबद्दल</h2>
           <div className="h-1 w-20 bg-green-600 mx-auto mt-2"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              data-aos="fade-right"
+              data-aos-delay="100"
+            >
               <h3 className="text-xl font-semibold text-green-800 mb-2">उद्देश आणि ध्येय</h3>
               <p className="text-gray-700">दिंडोरी कृषि उत्पन्न बाजार समितीचे मुख्य उद्दिष्ट शेतकरी व व्यापारी यांच्यादरम्यान पारदर्शक व्यापार प्रक्रिया निर्माण करणे आहे. आमचे ध्येय शेतकऱ्यांना त्यांच्या उत्पादनांची योग्य किंमत मिळवून देणे आणि व्यापारांना विश्वासार्ह बाजारपेठ उपलब्ध करून देणे आहे.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              data-aos="fade-right"
+              data-aos-delay="300"
+            >
               <h3 className="text-xl font-semibold text-green-800 mb-2">इतिहास आणि परंपरा</h3>
               <p className="text-gray-700">१९८९ मध्ये स्थापित, आमची बाजार समिती नाशिक जिल्ह्यातील दिंडोरी तालुक्यातील शेतकऱ्यांसाठी एक विश्वासार्ह व्यासपीठ म्हणून काम करत आहे. गेल्या ५० वर्षांहून अधिक काळात, आम्ही कृषी क्षेत्रातील विविध संकटांवर मात करत प्रगती केली आहे.</p>
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+          <div className="grid grid-cols-2 gap-4" data-aos="fade-left">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              data-aos="zoom-in"
+              data-aos-delay="150"
+            >
               <div className="text-green-600 flex justify-center mb-4">
-                <FaUsers size={48} />
+                <FaUsers size={48} className="animate-bounce" />
               </div>
               <h3 className="font-bold text-xl text-gray-800 mb-2">१९</h3>
               <p className="text-gray-600 text-sm">समिती सदस्य २०२३-२८</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              data-aos="zoom-in"
+              data-aos-delay="300"
+            >
               <div className="text-green-600 flex justify-center mb-4">
-                <FaBuilding size={48} />
+                <FaBuilding size={48} className="animate-pulse" />
               </div>
               <h3 className="font-bold text-xl text-gray-800 mb-2">१२.५ एकर</h3>
               <p className="text-gray-600 text-sm">बाजार आवार क्षेत्र</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              data-aos="zoom-in"
+              data-aos-delay="450"
+            >
               <div className="text-green-600 flex justify-center mb-4">
-                <FaLeaf size={48} />
+                <FaLeaf size={48} className="animate-bounce" />
               </div>
               <h3 className="font-bold text-xl text-gray-800 mb-2">५८+</h3>
               <p className="text-gray-600 text-sm">शेती उत्पादने प्रकार</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+            <div 
+              className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              data-aos="zoom-in"
+              data-aos-delay="600"
+            >
               <div className="text-green-600 flex justify-center mb-4">
-                <FaHandshake size={48} />
+                <FaHandshake size={48} className="animate-pulse" />
               </div>
               <h3 className="font-bold text-xl text-gray-800 mb-2">३००+</h3>
               <p className="text-gray-600 text-sm">नोंदणीकृत व्यापारी</p>
@@ -379,45 +448,79 @@ export default function Home({Logout, user}) {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
-            <div className="inline-block p-4 bg-green-100 rounded-full mb-4">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center" data-aos="fade-up" data-aos-delay="100">
+            <div className="inline-block p-4 bg-green-100 rounded-full mb-4 animate-pulse">
               <FaLeaf className="text-green-600 text-3xl" />
             </div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">शेतकरी सहाय्य</h3>
             <p className="text-gray-600">शेतकरी व उत्पादकांसाठी मार्केटिंग, प्रशिक्षण, आणि वित्तीय सहाय्य.</p>
-            <Link href="/services/farmer-support" className="block mt-4 text-green-600 hover:text-green-700 font-medium">अधिक माहिती →</Link>
+            <Link href="/services/farmer-support" className="block mt-4 text-green-600 hover:text-green-700 font-medium transition-transform duration-300 hover:translate-x-2">अधिक माहिती →</Link>
           </div>
           
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
-            <div className="inline-block p-4 bg-green-100 rounded-full mb-4">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center" data-aos="fade-up" data-aos-delay="300">
+            <div className="inline-block p-4 bg-green-100 rounded-full mb-4 animate-bounce">
               <FaHandshake className="text-green-600 text-3xl" />
             </div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">व्यापारी सेवा</h3>
             <p className="text-gray-600">परवाने, नोंदणी, आणि विविध व्यापारी सेवांसाठी आमच्या सुविधा उपलब्ध आहेत.</p>
-            <Link href="/services/trader-services" className="block mt-4 text-green-600 hover:text-green-700 font-medium">अधिक माहिती →</Link>
+            <Link href="/services/trader-services" className="block mt-4 text-green-600 hover:text-green-700 font-medium transition-transform duration-300 hover:translate-x-2">अधिक माहिती →</Link>
           </div>
           
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
-            <div className="inline-block p-4 bg-green-100 rounded-full mb-4">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center" data-aos="fade-up" data-aos-delay="500">
+            <div className="inline-block p-4 bg-green-100 rounded-full mb-4 animate-pulse">
               <FaChartLine className="text-green-600 text-3xl" />
             </div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">बाजार माहिती</h3>
             <p className="text-gray-600">दैनिक दर, मार्केट ट्रेंड्स, आणि विविध उत्पादनांची सविस्तर माहिती आमच्या वेबसाइटवर उपलब्ध.</p>
-            <Link href="/daily-rate" className="block mt-4 text-green-600 hover:text-green-700 font-medium">अधिक माहिती →</Link>
+            <Link href="/daily-rate" className="block mt-4 text-green-600 hover:text-green-700 font-medium transition-transform duration-300 hover:translate-x-2">अधिक माहिती →</Link>
           </div>
         </div>
       </div>
     </div>
     
       <div className="px-4 py-8 bg-gray-50">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">आजचे बाजार दर</h2>
+        <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-4 md:mb-0">आजचे बाजार दर</h2>
+          
+          <div className="flex items-center space-x-2">
+            <FaMapMarkerAlt className="text-green-600 mr-1" />
+            <label className="font-medium text-gray-700 mr-2">बाजार:</label>
+            <div className="relative">
+              <select
+                value={selectedMarket}
+                onChange={(e) => setSelectedMarket(e.target.value)}
+                className="bg-white border border-gray-300 rounded-md px-4 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                {marketOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                <svg className="h-4 w-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            
+            {selectedMarket && (
+              <button
+                onClick={() => setSelectedMarket('')}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-2 rounded-md flex items-center text-sm"
+              >
+                <FaFilter className="mr-1" /> सर्व बाजार
+              </button>
+            )}
+          </div>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
-          {!products || !Array.isArray(products) || products.length === 0 ? (
+          {!filteredProducts || !Array.isArray(filteredProducts) || filteredProducts.length === 0 ? (
             <div className="col-span-full text-center py-10">
-              <p className="text-lg text-gray-600">आजचे बाजार भाव लोड करत आहे...</p>
+              <p className="text-lg text-gray-600">{products.length > 0 ? 'या बाजारात आजचे दर उपलब्ध नाहीत' : 'आजचे बाजार भाव लोड करत आहे...'}</p>
             </div>
           ) : (
-            Array.isArray(products) && products.map((product) => {
+            Array.isArray(filteredProducts) && filteredProducts.map((product) => {
               // Handle both DailyProducts and direct Products format
               const isFromDailyProducts = product.product && product.product._id;
               const productData = isFromDailyProducts ? product.product : product;
@@ -427,6 +530,14 @@ export default function Home({Logout, user}) {
               
               return (
                 <div key={product._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 p-4">
+                  {(product.marketName || (product.product && product.product.marketName)) && (
+                    <div className="mb-2">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <FaMapMarkerAlt className="mr-1" size={10} />
+                        {product.marketName || (product.product && product.product.marketName) || 'दिंडोरी मुख्य बाजार'}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex gap-2 items-center">
                     <span className="bg-green-700 text-white text-xs md:text-sm px-2 md:px-3 py-1 rounded-md">
                       {timeAgo(timestamp)}

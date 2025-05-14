@@ -4,6 +4,10 @@ import { Router, useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+// Animation imports
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 
 
 export default function App({ Component, pageProps }) {
@@ -15,8 +19,22 @@ export default function App({ Component, pageProps }) {
     if (token) {
       setUser({ value: token });
     }
-
+    
+    // Initialize AOS animation library
+    AOS.init({
+      duration: 800,
+      once: false,
+      easing: 'ease-in-out',
+      mirror: true
+    });
   }, [router.query]);
+  
+  // Refresh AOS on route change
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => {
+      AOS.refresh();
+    });
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");

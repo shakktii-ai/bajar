@@ -2,6 +2,33 @@ import mongoose from 'mongoose';
 import Products from '../../models/Products'; // Path to your Products model
 import DailyProducts from '../../models/DailyProducts'; // New model for daily products
 
+// Check and rebuild index if needed
+let indexRebuildAttempted = false;
+const rebuildIndex = async () => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(process.env.MONGODB_URI);
+    }
+    
+    console.log('Attempting to rebuild DailyProducts index...');
+    // Drop the old index
+    await mongoose.connection.collection('dailyproducts').dropIndex('product_1_date_1');
+    console.log('Old index dropped successfully');
+    
+    // Create the new index
+    await mongoose.connection.collection('dailyproducts').createIndex(
+      { product: 1, date: 1, marketName: 1 }, 
+      { unique: true }
+    );
+    
+    console.log('New index created successfully with marketName included');
+    return true;
+  } catch (err) {
+    console.error('Error rebuilding index:', err);
+    return false;
+  }
+};
+
 // Ensure database connection
 const connectDB = async () => {
   if (!mongoose.connections[0].readyState) {
@@ -179,9 +206,11 @@ const createProduct = async (req, res) => {
 
 // POST - Add daily product price
 const addDailyPrice = async (req, res) => {
-  try {
+  // Try to handle adding the daily price with retry logic for index issues
+  const tryAddDailyPrice = async () => {
+    try {
     await connectDB();
-    const { productId, date, PriceMax, PriceMin } = req.body;
+    const { productId, date, PriceMax, PriceMin, marketName } = req.body;
     
     // Validate required fields
     if (!productId) {
@@ -223,10 +252,11 @@ const addDailyPrice = async (req, res) => {
     
     console.log('Adding daily price for product:', productId, 'date:', formattedDate.toISOString());
     
-    // Check if entry for this product and date already exists
+    // Check if entry for this product, date, and market already exists
     let dailyProduct = await DailyProducts.findOne({
       product: productId,
-      date: formattedDate
+      date: formattedDate,
+      marketName: req.body.marketName || 'दिंडोरी मुख्य बाजार'
     });
     
     if (dailyProduct) {
@@ -234,6 +264,12 @@ const addDailyPrice = async (req, res) => {
       console.log('Updating existing daily price entry id:', dailyProduct._id);
       dailyProduct.PriceMax = maxPrice;
       dailyProduct.PriceMin = minPrice;
+      
+      // Update marketName if provided
+      if (marketName) {
+        dailyProduct.marketName = marketName;
+      }
+      
       await dailyProduct.save();
     } else {
       // Create new entry
@@ -241,6 +277,7 @@ const addDailyPrice = async (req, res) => {
       dailyProduct = new DailyProducts({
         product: productId,
         date: formattedDate,
+        marketName: marketName || 'दिंडोरी मुख्य बाजार',
         PriceMax: maxPrice,
         PriceMin: minPrice
       });
@@ -256,8 +293,51 @@ const addDailyPrice = async (req, res) => {
     
     console.log('Daily price added successfully:', dailyProduct._id);
     res.status(201).json(dailyProduct);
+    } catch (error) {
+      // Check if this is a duplicate key error with the old index format
+      if (error.code === 11000 && error.keyPattern && 
+          (error.keyPattern.product === 1 && error.keyPattern.date === 1 && !error.keyPattern.marketName)) {
+        
+        // Only try to rebuild the index once
+        if (!indexRebuildAttempted) {
+          console.log('Detected old index format, attempting to rebuild...');
+          indexRebuildAttempted = true;
+          const rebuilt = await rebuildIndex();
+          
+          if (rebuilt) {
+            console.log('Index rebuilt, retrying the operation...');
+            return { retry: true };
+          }
+        }
+      }
+      
+      throw error;
+    }
+    return { retry: false, success: true };
+  };
+  
+  try {
+    // First attempt
+    const result = await tryAddDailyPrice();
+    
+    // If we need to retry after rebuilding the index
+    if (result && result.retry) {
+      const retryResult = await tryAddDailyPrice();
+      if (!retryResult.success) {
+        throw new Error('Failed after index rebuild attempt');
+      }
+    }
   } catch (error) {
     console.error('Error adding daily price:', error);
+    
+    // Provide a more helpful error message for duplicate key errors
+    if (error.code === 11000) {
+      return res.status(409).json({ 
+        error: 'दिलेल्या बाजारासाठी या उत्पादनाची किंमत आज आधीच जोडली गेली आहे. कृपया अन्य बाजार निवडा किंवा वेगळे उत्पादन निवडा.',
+        details: error.message 
+      });
+    }
+    
     res.status(500).json({ error: 'Failed to add daily price: ' + error.message });
   }
 };

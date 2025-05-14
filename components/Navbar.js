@@ -1237,7 +1237,7 @@ const Navbar = () => {
         {mobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      <nav className="hidden md:block bg-white shadow-md rounded-lg mx-4 md:mx-10 lg:mx-20">
+      <nav className="hidden md:block bg-white shadow-md rounded-lg mx-4 md:mx-10 lg:mx-10">
         <div className="mx-auto px-4">
           <div className="flex justify-center items-center py-2">
             <div className="flex flex-wrap">
@@ -1392,6 +1392,13 @@ const Navbar = () => {
                 }`}
               >
                 Contact</Link>
+              <Link
+                href="/complaints"
+                className={`text-gray-700 p-2 px-6 md:px-8 hover:text-red-600 hover:border-t-2 hover:border-t-red-700 ${
+                  router.pathname === "/complaints" ? "border-t-2 border-t-red-700" : ""
+                }`}
+              >
+                Complaints</Link>
             </div>
             
           </div>
@@ -1476,6 +1483,9 @@ const Navbar = () => {
 
       <Link href="/contact" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
         Contact
+      </Link>
+      <Link href="/complaints" className="p-3 hover:text-red-700 border-b" onClick={() => setMobileMenuOpen(false)}>
+        Complaints
       </Link>
     </div>
   </div>

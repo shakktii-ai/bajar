@@ -153,6 +153,13 @@ export default function AdminLayout({ children }) {
                 </Link>
               </li>
               <li>
+                <Link href="/admin/complaints" className={`block px-4 py-2 rounded font-medium ${
+                  router.pathname === '/admin/complaints' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
+                }`}>
+                  तक्रार व्यवस्थापन
+                </Link>
+              </li>
+              <li>
                 <Link href="/admin/settings" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin/settings' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
                 }`}>

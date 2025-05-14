@@ -11,6 +11,10 @@ const DailyProductsSchema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
+  marketName: {
+    type: String,
+    default: 'दिंडोरी मुख्य बाजार'
+  },
   PriceMax: {
     type: Number,
     required: true,
@@ -24,7 +28,7 @@ const DailyProductsSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Create compound index for product and date to ensure uniqueness
-DailyProductsSchema.index({ product: 1, date: 1 }, { unique: true });
+// Create compound index for product, date, and marketName to ensure uniqueness
+DailyProductsSchema.index({ product: 1, date: 1, marketName: 1 }, { unique: true });
 
 export default mongoose.models.DailyProducts || mongoose.model('DailyProducts', DailyProductsSchema);

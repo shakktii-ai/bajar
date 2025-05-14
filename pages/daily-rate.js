@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaFilter } from 'react-icons/fa';
+import Head from 'next/head';
+import Link from 'next/link';
+import { FaCalendarAlt, FaFilter, FaMapMarkerAlt, FaSync, FaInfoCircle, FaExclamationTriangle, FaArrowRight } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 export default function DailyRate() {
   const [dailyPrices, setDailyPrices] = useState([]);
+  const [filteredPrices, setFilteredPrices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -11,11 +17,42 @@ export default function DailyRate() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [prevDayData, setPrevDayData] = useState([]);
   
+  // Complaint form state
+  const [showComplaintForm, setShowComplaintForm] = useState(false);
+  const [complaintData, setComplaintData] = useState({
+    fullName: '',
+    mobileNumber: '',
+    marketName: 'दिंडोरी मुख्य बाजार',
+    complaintText: ''
+  });
+  const [complaintSuccess, setComplaintSuccess] = useState(false);
+  const [complaintError, setComplaintError] = useState(null);
+  const [submittingComplaint, setSubmittingComplaint] = useState(false);
+  
+  // Market filter
+  const [selectedMarket, setSelectedMarket] = useState('');
+  const marketOptions = [
+    { value: '', label: 'सर्व बाजार' },
+    { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
+    { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+   
+  ];
+  
   // Format date for display
   const formatDateMarathi = (dateString) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' };
     return new Date(dateString).toLocaleDateString('mr-IN', options);
   };
+  
+  // Initialize AOS animation library
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: false,
+      mirror: false
+    });
+  }, []);
   
   // Fetch daily products for the selected date
   useEffect(() => {
@@ -186,15 +223,39 @@ export default function DailyRate() {
       }
       
       setPrevDayData(prevData);
+      setDailyPrices(data);
+      setFilteredPrices(data); // Initialize with all data
       setLoading(false);
     } catch (err) {
       console.error('Error fetching daily products:', err);
       setError(err.message);
       setLoading(false);
       setDailyPrices([]);
+      setFilteredPrices([]);
       setPrevDayData([]);
     }
   };
+  
+  // Filter daily prices based on selected market
+  useEffect(() => {
+    console.log("Daily rate - Market filter changed to:", selectedMarket);
+    console.log("Daily rate - Total items before filtering:", dailyPrices.length);
+    
+    if (selectedMarket && selectedMarket !== '') {
+      const filtered = dailyPrices.filter(item => {
+        // Get marketName with fallback to default
+        const marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        console.log("Daily item market name:", marketName, "comparing with", selectedMarket);
+        return marketName === selectedMarket;
+      });
+      
+      console.log("Daily rate - Filtered items after market filter:", filtered.length);
+      setFilteredPrices(filtered);
+    } else {
+      console.log("Daily rate - No market filter, showing all items");
+      setFilteredPrices(dailyPrices);
+    }
+  }, [selectedMarket, dailyPrices]);
   
   // Find previous day price for a product
   const findPrevDayPrice = (productId) => {
@@ -239,62 +300,162 @@ export default function DailyRate() {
   };
 
   // Group products and prepare for display
-  const groupedProducts = groupByCategory(dailyPrices);
+  const groupedProducts = groupByCategory(filteredPrices);
   const categories = Object.keys(groupedProducts).sort();
 
+  // Handle complaint form input changes
+  const handleComplaintInputChange = (e) => {
+    const { name, value } = e.target;
+    setComplaintData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  // Handle complaint form submission
+  const submitComplaint = async (e) => {
+    e.preventDefault();
+    setSubmittingComplaint(true);
+    setComplaintError(null);
+    
+    try {
+      const response = await fetch('/api/complaints', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(complaintData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'तक्रार नोंदवताना काहीतरी चूक झाली');
+      }
+      
+      setComplaintSuccess(true);
+      setComplaintData({
+        fullName: '',
+        mobileNumber: '',
+        marketName: 'दिंडोरी मुख्य बाजार',
+        complaintText: ''
+      });
+      
+      // Auto-hide form after success
+      setTimeout(() => {
+        setShowComplaintForm(false);
+        setComplaintSuccess(false);
+      }, 3000);
+      
+    } catch (err) {
+      setComplaintError(err.message);
+    } finally {
+      setSubmittingComplaint(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h1 className="text-3xl font-bold text-center text-green-800 mb-4">
-            दिंडोरी कृषि उत्पन्न बाजार समिती, जि.नाशिक
-          </h1>
-          <h2 className="text-2xl font-semibold text-center text-green-700 mb-6">
-            दैनिक बाजारभाव
-          </h2>
+    <>
+      <Head>
+        <title>दैनिक बाजारभाव - दिंडोरी कृषि उत्पन्न बाजार समिती</title>
+        <meta name="description" content="दिंडोरी कृषि उत्पन्न बाजार समिती दैनिक बाजारभाव" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
+      
+      
+      <div className="min-h-screen bg-green-50 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8" data-aos="fade-up">
+            <h1 className="text-3xl font-bold text-center text-green-800 mb-4" data-aos="fade-down" data-aos-delay="100">
+              दिंडोरी कृषि उत्पन्न बाजार समिती, जि.नाशिक
+            </h1>
+            <h2 className="text-2xl font-semibold text-center text-green-700 mb-6" data-aos="fade-up" data-aos-delay="200">
+              दैनिक बाजारभाव
+            </h2>
           
           {/* Date Filter */}
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 bg-gray-50 p-4 rounded-lg">
-            <div className="flex items-center mb-4 sm:mb-0">
-              <FaCalendarAlt className="text-green-600 mr-2" />
-              <label className="font-medium text-gray-700 mr-2 ">दिनांक निवडा:</label>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                max={today}
-              />
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 bg-gray-50 p-4 rounded-lg" data-aos="fade-up" data-aos-delay="300">
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-4 sm:mb-0 w-full sm:w-auto">
+              <div className="flex items-center w-full sm:w-auto" data-aos="fade-right" data-aos-delay="400">
+                <FaCalendarAlt className="text-green-600 mr-2" />
+                <label className="font-medium text-gray-700 mr-2">दिनांक निवडा:</label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                  max={today}
+                />
+              </div>
+              
+              <div className="flex items-center w-full sm:w-auto" data-aos="fade-right" data-aos-delay="500">
+                <FaMapMarkerAlt className="text-green-600 mr-2" />
+                <label className="font-medium text-gray-700 mr-2">बाजार:</label>
+                <select
+                  value={selectedMarket}
+                  onChange={(e) => setSelectedMarket(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                >
+                  {marketOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <button
-              onClick={() => setSelectedDate(today)}
-              className="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-md"
-            >
-              आजचे भाव
-            </button>
+            
+            <div className="flex items-center gap-2" data-aos="fade-left" data-aos-delay="600">
+              <button
+                onClick={() => setSelectedDate(today)}
+                className="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-md transition-all duration-300 flex items-center"
+              >
+                <FaCalendarAlt className="mr-1" />
+                आजचे भाव
+              </button>
+              {selectedMarket && (
+                <button
+                  onClick={() => setSelectedMarket('')}
+                  className="bg-red-100 hover:bg-red-200 text-red-800 px-4 py-2 rounded-md transition-all duration-300 flex items-center"
+                  data-aos="zoom-in" data-aos-delay="700"
+                >
+                  <FaFilter className="mr-1" />
+                  बाजार फिल्टर रद्द करा
+                </button>
+              )}
+            </div>
           </div>
 
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700 mx-auto"></div>
-              <p className="mt-4 text-gray-600">माहिती लोड करत आहे...</p>
+            <div className="flex flex-col items-center justify-center py-12" data-aos="fade">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-500 mb-4"></div>
+              <p className="text-gray-600 text-lg">माहिती लोड करत आहे...</p>
             </div>
           ) : error ? (
-            <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
-              <p>{error}</p>
+            <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6" data-aos="fade-up">
+              <p className="font-medium flex items-center"><FaExclamationTriangle className="mr-2" />त्रुटी: {error}</p>
             </div>
           ) : !dailyPrices || !Array.isArray(dailyPrices) || dailyPrices.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 rounded-lg">
-              <FaFilter className="mx-auto text-4xl text-gray-300 mb-4" />
-              <p className="text-gray-600 text-lg">निवडलेल्या तारखेसाठी कोणतेही बाजारभाव उपलब्ध नाहीत.</p>
-              <p className="mt-2 text-gray-500">कृपया दुसरी तारीख निवडा किंवा नंतर पुन्हा प्रयत्न करा.</p>
+            <div className="text-center py-12 bg-gray-50 rounded-lg" data-aos="fade-up">
+              <FaInfoCircle className="mx-auto text-4xl text-gray-400 mb-4" />
+              <p className="text-gray-600 text-lg font-medium">
+                निवडलेल्या दिनांकासाठी कोणतेही बाजारभाव उपलब्ध नाहीत.
+              </p>
+              <button 
+                onClick={fetchDailyProducts} 
+                className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-all duration-300 flex items-center mx-auto"
+              >
+                <FaSync className="mr-2" />
+                पुन्हा प्रयत्न करा
+              </button>
             </div>
           ) : (
             <div className="prose max-w-none">
-              <p className="mb-6">
+              <p className="mb-6" data-aos="fade-up" data-aos-delay="300">
                 दिंडोरी बाजार समितीमध्ये विकल्या जाणार्या प्रमुख कृषी उत्पादनांचे <strong>{formatDateMarathi(selectedDate)}</strong> बाजारभाव खालीलप्रमाणे आहेत. हे दर सरासरी असून, गुणवत्तेनुसार त्यात बदल होऊ शकतो.
               </p>
-
+              
               {/* Dynamic Category Tables */}
               {Array.isArray(categories) && categories.map((category, categoryIndex) => {
                 const items = groupedProducts && groupedProducts[category];
@@ -309,13 +470,12 @@ export default function DailyRate() {
                 }
                 
                 return (
-                  <div className="mb-10" key={category}>
-                    <h3 className="text-xl font-semibold text-green-800 mb-4">
-                      {category === 'भाज्या' ? 'भाजीपाला' : 
+                  <div key={category + categoryIndex} className="mb-10" data-aos="fade-up" data-aos-delay={200 + categoryIndex * 100}>
+                    <h3 className="text-xl font-medium mb-3 text-green-800 border-b pb-2" data-aos="fade-right" data-aos-delay={300 + categoryIndex * 100}>
+                      {category === 'भाजीपाला' ? 'भाजीपाला' : 
                        category === 'फळे' ? 'फळे' : 
-                       category === 'धान्य' ? 'धान्य व कडधान्य' : 
-                       category === 'डाळी' ? 'कडधान्य' : 
-                       category === 'मसाले' ? 'मसाला पदार्थ' : category}
+                       category === 'कडधान्य' || category === 'डाळी' ? 'कडधान्य' : 
+                       category === 'मसाला पदार्थ' || category === 'मसाले' ? 'मसाला पदार्थ' : category}
                       ({unitDisplay === 'किलो' || unitDisplay === 'kilo' ? 'प्रति किलो दर' : 
                         unitDisplay === 'क्विंटल' || unitDisplay === 'kuintal' ? 'प्रति क्विंटल दर' : 
                         'प्रति ' + unitDisplay + ' दर'})
@@ -330,8 +490,6 @@ export default function DailyRate() {
                             <th className="py-3 px-4 border text-center font-medium">न्यूनतम</th>
                             <th className="py-3 px-4 border text-center font-medium">अधिकतम</th>
                             <th className="py-3 px-4 border text-center font-medium">सरासरी</th>
-                            <th className="py-3 px-4 border text-center font-medium">मागील सरासरी</th>
-                            <th className="py-3 px-4 border text-center font-medium">बदल %</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -370,10 +528,6 @@ export default function DailyRate() {
                                 <td className="py-3 px-4 border">{item.PriceMin}</td>
                                 <td className="py-3 px-4 border">{item.PriceMax}</td>
                                 <td className="py-3 px-4 border">{currentAvg}</td>
-                                <td className="py-3 px-4 border">{prevDayDisplay}</td>
-                                <td className={`py-3 px-4 border ${isPositiveChange ? 'text-green-600' : isNegativeChange ? 'text-red-600' : 'text-gray-500'}`}>
-                                  {prevDayAvg ? (isPositiveChange ? '+' : '') + priceChange + '%' : 'नवीन'}
-                                </td>
                               </tr>
                             );
                           })}
@@ -393,7 +547,123 @@ export default function DailyRate() {
             </div>
           )}
         </div>
+        
+        {/* Complaints section with animations */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mt-8" data-aos="fade-up">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-green-800" data-aos="fade-right">
+              <FaExclamationTriangle className="inline-block mr-2 text-yellow-500" />
+              तक्रार नोंदवा
+            </h2>
+            <button 
+              onClick={() => setShowComplaintForm(!showComplaintForm)}
+              className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-all duration-300 flex items-center"
+              data-aos="fade-left"
+            >
+              {showComplaintForm ? 'फॉर्म बंद करा' : 'तक्रार नोंदवा'}
+              {!showComplaintForm && <FaArrowRight className="ml-2" />}
+            </button>
+          </div>
+          
+          {showComplaintForm && (
+            <div className="border border-gray-200 rounded-md p-6" data-aos="zoom-in">
+              {complaintSuccess ? (
+                <div className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-md" data-aos="fade">
+                  <p className="font-medium">आपली तक्रार यशस्वीरित्या नोंदवली गेली आहे. धन्यवाद!</p>
+                </div>
+              ) : (
+                <form onSubmit={submitComplaint}>
+                  {complaintError && (
+                    <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-md mb-4">
+                      <p>{complaintError}</p>
+                    </div>
+                  )}
+                  
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-gray-700 font-medium mb-2" htmlFor="fullName">पूर्ण नाव*</label>
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        value={complaintData.fullName}
+                        onChange={handleComplaintInputChange}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-gray-700 font-medium mb-2" htmlFor="mobileNumber">मोबाईल नंबर*</label>
+                      <input
+                        type="tel"
+                        id="mobileNumber"
+                        name="mobileNumber"
+                        value={complaintData.mobileNumber}
+                        onChange={handleComplaintInputChange}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required
+                        pattern="[0-9]{10}"
+                        title="कृपया 10 अंकी मोबाईल नंबर टाका"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-gray-700 font-medium mb-2" htmlFor="marketName">बाजार*</label>
+                      <select
+                        id="marketName"
+                        name="marketName"
+                        value={complaintData.marketName}
+                        onChange={handleComplaintInputChange}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required
+                      >
+                        {marketOptions.slice(1).map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    
+                    <div className="sm:col-span-2">
+                      <label className="block text-gray-700 font-medium mb-2" htmlFor="complaintText">तक्रार विवरण*</label>
+                      <textarea
+                        id="complaintText"
+                        name="complaintText"
+                        value={complaintData.complaintText}
+                        onChange={handleComplaintInputChange}
+                        rows="4"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 text-right">
+                    <button
+                      type="submit"
+                      className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-8 rounded-md transition-all duration-300"
+                      disabled={submittingComplaint}
+                    >
+                      {submittingComplaint ? 'प्रक्रिया सुरू आहे...' : 'तक्रार नोंदवा'}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
+          
+          <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
+            <p className="text-sm text-gray-600">
+              <FaInfoCircle className="inline-block mr-1 text-blue-500" />
+              आपल्या तक्रारीचे निराकरण 48 तासांच्या आत केले जाईल. आपल्या नोंदणीकृत मोबाईल नंबरवर अपडेट मिळेल.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+      </div>
+    </>
+    
   );
 }
