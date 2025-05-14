@@ -52,9 +52,7 @@ const Footer = () => {
              <li className="text-green-100">सोमवार - शनिवार: सकाळी ७:00 - संध्याकाळी ७:00</li>
              <li className="text-green-100">रविवार: सकाळी ७:00 - दुपारी १६:00</li>
            </ul>
-           <div className="mt-6">
-             <Link href="/admin" className="bg-white text-green-800 px-4 py-2 rounded shadow-md hover:bg-green-100 transition-colors duration-300">अड्मिन लॉगिन</Link>
-           </div>
+           
          </div>
        </div>
        

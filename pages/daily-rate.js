@@ -11,6 +11,7 @@ export default function DailyRate() {
   const [filteredPrices, setFilteredPrices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [marketStatus, setMarketStatus] = useState(null);
   
   // Date selection
   const today = new Date().toISOString().split('T')[0];
@@ -35,6 +36,8 @@ export default function DailyRate() {
     { value: '', label: 'सर्व बाजार' },
     { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
     { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+    { value: 'खोरीपाडा उप बाजार', label: 'खोरीपाडा उप बाजार' },
+    { value: 'मोहाडी उप बाजार', label: 'मोहाडी उप बाजार' },
    
   ];
   
@@ -54,16 +57,17 @@ export default function DailyRate() {
     });
   }, []);
   
-  // Fetch daily products for the selected date
+  // Fetch daily products and market status for the selected date
   useEffect(() => {
     fetchDailyProducts();
-  }, [selectedDate]);
+  }, [selectedDate, selectedMarket]);
   
   // Function to fetch daily products
   const fetchDailyProducts = async () => {
     try {
       setLoading(true);
       setError(null);
+      setMarketStatus(null);
       
       // Format the selected date for comparison
       // Create date object without timezone issues
@@ -81,10 +85,42 @@ export default function DailyRate() {
       console.log('Parsed date object:', dateObj.toString());
       console.log('Fetching data for date:', formattedDate);
       
+      // Check for market status first
+      let marketQuery = '';
+      if (selectedMarket) {
+        marketQuery = `&marketName=${encodeURIComponent(selectedMarket)}`;
+      }
+      
+      const marketStatusResponse = await fetch(`/api/marketStatus?date=${formattedDate}${marketQuery}`);
+      if (marketStatusResponse.ok) {
+        const statusData = await marketStatusResponse.json();
+        if (statusData && statusData.length > 0) {
+          // Find status for the selected market or any market if none selected
+          const relevantStatus = selectedMarket 
+            ? statusData.find(s => s.marketName === selectedMarket)
+            : statusData[0];
+            
+          if (relevantStatus && relevantStatus.status) {
+            setMarketStatus(relevantStatus);
+            console.log('Market status found:', relevantStatus);
+          }
+        }
+      }
+      
       // First, try to get products from DailyProducts collection
+      // We'll fetch ALL products for the date and filter client-side to ensure consistency
       let response = await fetch(`/api/addAndGetProducts?date=${formattedDate}&path=daily`);
       let data = await response.json();
       console.log('Daily products data from API:', data);
+      
+      // Apply market filtering immediately on the raw data
+      if (selectedMarket && selectedMarket !== '') {
+        data = data.filter(item => {
+          const itemMarket = item.marketName || 'दिंडोरी मुख्य बाजार';
+          return itemMarket === selectedMarket;
+        });
+        console.log(`Filtered data for market ${selectedMarket}, found ${data.length} items`);
+      }
       
       // If no data from DailyProducts, get data from Products collection and filter by date
       if (!data || data.length === 0) {
@@ -96,9 +132,18 @@ export default function DailyRate() {
           const productsData = await productsResponse.json();
           
           // Convert products to expected format (similar to DailyProducts schema)
-          // Filter products that were created on the selected date
+          // Filter products that were created on the selected date AND have valid price information
+          // AND match the selected market if one is selected
           const filteredProducts = productsData.filter(product => {
             if (!product.createdAt) return false;
+            if (!product.PriceMin || !product.PriceMax) return false; // Only show products with price info
+            
+            // Apply market filtering
+            if (selectedMarket && selectedMarket !== '') {
+              const productMarket = product.marketName || 'दिंडोरी मुख्य बाजार';
+              if (productMarket !== selectedMarket) return false;
+            }
+            
             const productDate = new Date(product.createdAt);
             return productDate.toISOString().split('T')[0] === formattedDate;
           });
@@ -224,7 +269,7 @@ export default function DailyRate() {
       
       setPrevDayData(prevData);
       setDailyPrices(data);
-      setFilteredPrices(data); // Initialize with all data
+      setFilteredPrices(data); // This will be filtered by the useEffect when selectedMarket changes
       setLoading(false);
     } catch (err) {
       console.error('Error fetching daily products:', err);
@@ -244,16 +289,26 @@ export default function DailyRate() {
     if (selectedMarket && selectedMarket !== '') {
       const filtered = dailyPrices.filter(item => {
         // Get marketName with fallback to default
+        // If no marketName is explicitly set, it's from the main market
         const marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        
         console.log("Daily item market name:", marketName, "comparing with", selectedMarket);
+        
+        // Strict equality - only show exact market matches
         return marketName === selectedMarket;
       });
       
       console.log("Daily rate - Filtered items after market filter:", filtered.length);
       setFilteredPrices(filtered);
     } else {
-      console.log("Daily rate - No market filter, showing all items");
-      setFilteredPrices(dailyPrices);
+      // When no specific market is selected, only show items from the main market
+      const mainMarketItems = dailyPrices.filter(item => {
+        const marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        return marketName === 'दिंडोरी मुख्य बाजार';
+      });
+      
+      console.log("Daily rate - No market filter, showing main market items:", mainMarketItems.length);
+      setFilteredPrices(mainMarketItems);
     }
   }, [selectedMarket, dailyPrices]);
   
@@ -368,8 +423,13 @@ export default function DailyRate() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8" data-aos="fade-up">
             <h1 className="text-3xl font-bold text-center text-green-800 mb-4" data-aos="fade-down" data-aos-delay="100">
-              दिंडोरी कृषि उत्पन्न बाजार समिती, जि.नाशिक
-            </h1>
+            {selectedMarket === 'वणी उप बाजार'
+    ? 'वणी कृषि उत्पन्न उप-बाजार समिती, दिंडोरी, जि.नाशिक'
+    : selectedMarket === 'खोरीपाडा उप बाजार'
+    ? 'खोरीपाडा कृषि उत्पन्न उप-बाजार समिती, दिंडोरी, जि.नाशिक'
+    : selectedMarket === 'मोहाडी उप बाजार'
+    ? 'मोहाडी कृषि उत्पन्न उप-बाजार समिती, दिंडोरी, जि.नाशिक'
+    : 'दिंडोरी कृषि उत्पन्न बाजार समिती, जि.नाशिक'} </h1>
             <h2 className="text-2xl font-semibold text-center text-green-700 mb-6" data-aos="fade-up" data-aos-delay="200">
               दैनिक बाजारभाव
             </h2>
@@ -430,25 +490,36 @@ export default function DailyRate() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12" data-aos="fade">
               <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-500 mb-4"></div>
-              <p className="text-gray-600 text-lg">माहिती लोड करत आहे...</p>
+              <p className="text-gray-600 text-lg"></p>
             </div>
           ) : error ? (
             <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6" data-aos="fade-up">
               <p className="font-medium flex items-center"><FaExclamationTriangle className="mr-2" />त्रुटी: {error}</p>
             </div>
-          ) : !dailyPrices || !Array.isArray(dailyPrices) || dailyPrices.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 rounded-lg" data-aos="fade-up">
-              <FaInfoCircle className="mx-auto text-4xl text-gray-400 mb-4" />
-              <p className="text-gray-600 text-lg font-medium">
-                निवडलेल्या दिनांकासाठी कोणतेही बाजारभाव उपलब्ध नाहीत.
+          ) : marketStatus ? (
+            <div className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200" data-aos="fade-up">
+              <FaInfoCircle className="mx-auto text-4xl text-amber-500 mb-4" />
+              <h3 className="text-xl font-bold text-amber-700 mb-2">
+                {marketStatus.status === 'आवक नाही' ? 'आज बाजारात आवक नाही' : 
+                 marketStatus.status === 'सप्ताहिक सुट्टी' ? 'आज बाजाराची सप्ताहिक सुट्टी आहे' : ''}
+              </h3>
+              <p className="text-gray-600 text-lg">
+                {marketStatus.marketName || selectedMarket || ''} - {formatDateMarathi(selectedDate)}
               </p>
-              <button 
-                onClick={fetchDailyProducts} 
-                className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-all duration-300 flex items-center mx-auto"
-              >
-                <FaSync className="mr-2" />
-                पुन्हा प्रयत्न करा
-              </button>
+            </div>
+          ) : !dailyPrices || !Array.isArray(dailyPrices) || dailyPrices.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow-sm" data-aos="fade-up">
+              <div className="text-gray-400 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-600 mb-2">
+                
+              </h3>
+              <p className="text-gray-500 mt-1">
+                {formatDateMarathi(selectedDate)}
+              </p>
             </div>
           ) : (
             <div className="prose max-w-none">

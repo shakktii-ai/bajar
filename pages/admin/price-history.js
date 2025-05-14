@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaSearch, FaFileDownload, FaArrowUp, FaArrowDown, FaFilter } from 'react-icons/fa';
+import { FaCalendarAlt, FaSearch, FaFileDownload, FaArrowUp, FaArrowDown, FaFilter, FaMapMarkerAlt } from 'react-icons/fa';
 import AdminLayout from '../../components/AdminLayout';
 
 export default function PriceHistoryPage() {
@@ -19,6 +19,14 @@ export default function PriceHistoryPage() {
   const [endDate, setEndDate] = useState(today);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedMarket, setSelectedMarket] = useState('');
+  
+  // Market options
+  const marketOptions = [
+    { value: '', label: 'सर्व बाजार' },
+    { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
+    { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+  ];
   
   // Fetch all products
   useEffect(() => {
@@ -84,6 +92,15 @@ export default function PriceHistoryPage() {
       filteredData = filteredData.filter(item => 
         item.product?._id === selectedProduct
       );
+    }
+    
+    // Filter by market
+    if (selectedMarket) {
+      filteredData = filteredData.filter(item => {
+        // Get marketName with fallback to default
+        const marketName = item.marketName || 'दिंडोरी मुख्य बाजार';
+        return marketName === selectedMarket;
+      });
     }
     
     // Filter by search query
@@ -186,7 +203,7 @@ export default function PriceHistoryPage() {
 
         {/* Filters */}
         <div className="mb-6 bg-gray-50 p-4 rounded-lg">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">प्रारंभ तारीख</label>
               <div className="flex items-center">
@@ -209,6 +226,23 @@ export default function PriceHistoryPage() {
                   onChange={(e) => setEndDate(e.target.value)}
                   className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">बाजार</label>
+              <div className="flex items-center">
+                <FaMapMarkerAlt className="text-gray-400 mr-2" />
+                <select
+                  value={selectedMarket}
+                  onChange={(e) => setSelectedMarket(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  {marketOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div>

@@ -73,7 +73,7 @@ const getDailyProducts = async (req, res) => {
   try {
     await connectDB();
     
-    const { startDate, endDate, date } = req.query;
+    const { startDate, endDate, date, marketName } = req.query;
     
     const query = {};
     
@@ -152,6 +152,11 @@ const getDailyProducts = async (req, res) => {
       query.date = { $gte: new Date(startDate) };
     } else if (endDate) {
       query.date = { $lte: new Date(endDate) };
+    }
+    
+    // Filter by market name if provided
+    if (marketName) {
+      query.marketName = marketName;
     }
     
     const dailyProducts = await DailyProducts.find(query)
@@ -290,6 +295,23 @@ const addDailyPrice = async (req, res) => {
       PriceMin: minPrice,
       updatedAt: formattedDate
     });
+    
+    // Clear any market status for this date and market when prices are added
+    try {
+      const marketStatusCollection = mongoose.connection.collection('marketStatus');
+      const formattedDateString = formattedDate.toISOString().split('T')[0];
+      
+      // Delete the market status for this specific date and market
+      await marketStatusCollection.deleteOne({
+        date: formattedDateString,
+        marketName: marketName || 'दिंडोरी मुख्य बाजार'
+      });
+      
+      console.log('Removed market status for date:', formattedDateString, 'and market:', marketName || 'दिंडोरी मुख्य बाजार');
+    } catch (statusError) {
+      console.error('Error removing market status:', statusError);
+      // Continue execution even if clearing market status fails
+    }
     
     console.log('Daily price added successfully:', dailyProduct._id);
     res.status(201).json(dailyProduct);

@@ -14,14 +14,24 @@ export default function DailyPricing() {
     PriceMax: '',
     PriceMin: '',
     notes: '',
-    marketName: 'दिंडोरी मुख्य बाजार'
+    marketName: 'दिंडोरी मुख्य बाजार',
+    marketStatus: ''
   });
+  
+  // Market status options
+  const marketStatusOptions = [
+    { value: '', label: 'नियमित बाजार' },
+    { value: 'आवक नाही', label: 'आवक नाही' },
+    { value: 'सप्ताहिक सुट्टी', label: 'सप्ताहिक सुट्टी' }
+  ];
   
   // Market options
   const marketOptions = [
     { value: '', label: 'सर्व बाजार' },
     { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
-    { value: 'वणी उप बाजार', label: 'वणी उप बाजार' }
+    { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+    { value: 'खोरीपाडा उप बाजार', label: 'खोरीपाडा उप बाजार' },
+    { value: 'मोहाडी उप बाजार', label: 'मोहाडी उप बाजार' }
   ];
   
   // Get today's date in YYYY-MM-DD format for the date input
@@ -59,7 +69,7 @@ export default function DailyPricing() {
     }
   };
   
-  // Function to fetch daily products for the selected date
+  // Function to fetch daily products and market status for the selected date
   const fetchDailyProducts = async () => {
     try {
       setLoading(true);
@@ -75,6 +85,17 @@ export default function DailyPricing() {
       const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       
       console.log(`Fetching daily prices for date: ${formattedDate}`);
+      
+      // First fetch market status for the day
+      const marketStatusResponse = await fetch(`/api/marketStatus?date=${formattedDate}`);
+      if (marketStatusResponse.ok) {
+        const statusData = await marketStatusResponse.json();
+        if (statusData && statusData.length > 0) {
+          // If we have market status data, show it in the UI
+          console.log('Market status found:', statusData);
+          // We will handle this in the UI
+        }
+      }
       
       const response = await fetch(`/api/addAndGetProducts?date=${formattedDate}&path=daily`);
       if (!response.ok) {
@@ -171,7 +192,8 @@ export default function DailyPricing() {
         PriceMax: '',
         PriceMin: '',
         notes: '',
-        marketName: priceData.marketName // Keep the selected market name
+        marketName: priceData.marketName, // Keep the selected market name
+        marketStatus: priceData.marketStatus // Keep the market status
       });
       setSelectedProduct('');
       fetchDailyProducts();
@@ -254,7 +276,74 @@ export default function DailyPricing() {
         
         <div className="grid grid-cols-1 gap-6 mb-6">
           {/* Daily Price Form */}
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="mb-6 bg-gray-50 p-4 rounded-lg">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">बाजार स्थिती सेट करा</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-white rounded-lg shadow-sm">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">बाजार निवडा</label>
+                <select
+                  name="marketName"
+                  value={priceData.marketName}
+                  onChange={handlePriceChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  <option value="सर्व बाजार">सर्व बाजार</option>
+                  <option value="दिंडोरी मुख्य बाजार">दिंडोरी मुख्य बाजार</option>
+                  <option value="वणी उप बाजार">वणी उप बाजार</option>
+                  <option value="खोरीपाडा उप बाजार">खोरीपाडा उप बाजार</option>
+                  <option value="मोहाडी उप बाजार">मोहाडी उप बाजार</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">बाजार स्थिती</label>
+                <select
+                  name="marketStatus"
+                  value={priceData.marketStatus}
+                  onChange={handlePriceChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  {marketStatusOptions.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    try {
+                      // Format date properly
+                      const dateParts = selectedDate.split('-');
+                      const year = parseInt(dateParts[0], 10);
+                      const month = parseInt(dateParts[1], 10);
+                      const day = parseInt(dateParts[2], 10);
+                      const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                      
+                      await fetch('/api/marketStatus', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          date: formattedDate,
+                          marketName: priceData.marketName,
+                          status: priceData.marketStatus
+                        }),
+                      });
+                      
+                      alert('बाजार स्थिती यशस्वीरित्या अपडेट झाली!');
+                    } catch (err) {
+                      console.error('Error setting market status:', err);
+                      alert('बाजार स्थिती अपडेट करताना त्रुटी: ' + err.message);
+                    }
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full"
+                >
+                  बाजार स्थिती सेट करा
+                </button>
+              </div>
+            </div>
+            
             <h2 className="text-lg font-semibold mb-4">नवीन दर जोडा</h2>
             
             <form onSubmit={addDailyPrice} className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -323,6 +412,10 @@ export default function DailyPricing() {
                 >
                   <option value="दिंडोरी मुख्य बाजार">दिंडोरी मुख्य बाजार</option>
                   <option value="वणी उप बाजार">वणी उप बाजार</option>
+                  <option value="खोरीपाडा उप बाजार">खोरीपाडा उप बाजार</option>
+                  <option value="मोहाडी उप बाजार">मोहाडी उप बाजार</option>
+                 
+                 
                  
                 </select>
               </div>

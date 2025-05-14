@@ -15,12 +15,16 @@ export default function Home({Logout, user}) {
   const slideCount = 4; // Total number of leader slides
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [marketStatus, setMarketStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   // Market filter options
   const marketOptions = [
     { value: '', label: 'सर्व बाजार' },
     { value: 'दिंडोरी मुख्य बाजार', label: 'दिंडोरी मुख्य बाजार' },
     { value: 'वणी उप बाजार', label: 'वणी उप बाजार' },
+    { value: 'खोरीपाडा उप बाजार', label: 'खोरीपाडा उप बाजार' },
+    { value: 'मोहाडी उप बाजार', label: 'मोहाडी उप बाजार' },
    
   ];
 
@@ -30,10 +34,37 @@ export default function Home({Logout, user}) {
   // Fetch only today's products using a GET API call
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       // Get today's date in YYYY-MM-DD format for API filtering
       const today = new Date().toISOString().split('T')[0];
       
-      // First, try to get products from DailyProducts with today's date
+      // First, check if there's a market status set for today
+      let marketQuery = '';
+      if (selectedMarket) {
+        marketQuery = `&marketName=${encodeURIComponent(selectedMarket)}`;
+      }
+      
+      const marketStatusResponse = await fetch(`/api/marketStatus?date=${today}${marketQuery}`);
+      if (marketStatusResponse.ok) {
+        const statusData = await marketStatusResponse.json();
+        if (statusData && statusData.length > 0) {
+          // Find status for the selected market or any market if none selected
+          const relevantStatus = selectedMarket 
+            ? statusData.find(s => s.marketName === selectedMarket)
+            : statusData[0];
+            
+          if (relevantStatus && relevantStatus.status) {
+            setMarketStatus(relevantStatus);
+            console.log('Market status found:', relevantStatus);
+          } else {
+            setMarketStatus(null);
+          }
+        } else {
+          setMarketStatus(null);
+        }
+      }
+      
+      // Try to get products from DailyProducts with today's date
       const res = await fetch(`/api/addAndGetProducts?date=${today}`);
       let data = await res.json();
       
@@ -42,9 +73,10 @@ export default function Home({Logout, user}) {
         const productsRes = await fetch('/api/addAndGetProducts');
         const allProducts = await productsRes.json();
         
-        // Filter products created today
+        // Filter products created today AND only include products with price information
         data = allProducts.filter(product => {
           if (!product.createdAt) return false;
+          if (!product.PriceMin || !product.PriceMax) return false; // Only show products with price info
           const productDate = new Date(product.createdAt);
           return productDate.toISOString().split('T')[0] === today;
         });
@@ -53,8 +85,10 @@ export default function Home({Logout, user}) {
       console.log('Today\'s products:', data);
       setProducts(data); // Set today's products
       setFilteredProducts(data); // Initialize filtered products with all data
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
+      setLoading(false);
     }
   };
   
@@ -514,67 +548,94 @@ export default function Home({Logout, user}) {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
-          {!filteredProducts || !Array.isArray(filteredProducts) || filteredProducts.length === 0 ? (
-            <div className="col-span-full text-center py-10">
-              <p className="text-lg text-gray-600">{products.length > 0 ? 'या बाजारात आजचे दर उपलब्ध नाहीत' : 'आजचे बाजार भाव लोड करत आहे...'}</p>
+        <div className="max-w-7xl mx-auto rounded-xl overflow-hidden">
+          {loading ? (
+            <div className="bg-white rounded-lg shadow-md p-8 text-center">
+              <div className="animate-spin h-10 w-10 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+              <p className="text-gray-600"></p>
+            </div>
+          ) : marketStatus ? (
+            <div className="bg-amber-50 rounded-lg shadow-md p-8 text-center border border-amber-200">
+              <div className="text-amber-500 text-4xl mb-4 mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-amber-700 mb-2">
+                {marketStatus.status === 'आवक नाही' ? 'आज बाजारात आवक नाही' : 
+                 marketStatus.status === 'सप्ताहिक सुट्टी' ? 'आज बाजाराची सप्ताहिक सुट्टी आहे' : ''}
+              </h3>
+              <p className="text-gray-600 text-lg">
+                {marketStatus.marketName || selectedMarket || ''} - {new Date().toLocaleDateString('mr-IN', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' })}
+              </p>
             </div>
           ) : (
-            Array.isArray(filteredProducts) && filteredProducts.map((product) => {
-              // Handle both DailyProducts and direct Products format
-              const isFromDailyProducts = product.product && product.product._id;
-              const productData = isFromDailyProducts ? product.product : product;
-              const priceMin = product.PriceMin;
-              const priceMax = product.PriceMax;
-              const timestamp = isFromDailyProducts ? product.date : product.createdAt;
-              
-              return (
-                <div key={product._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 p-4">
-                  {(product.marketName || (product.product && product.product.marketName)) && (
-                    <div className="mb-2">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        <FaMapMarkerAlt className="mr-1" size={10} />
-                        {product.marketName || (product.product && product.product.marketName) || 'दिंडोरी मुख्य बाजार'}
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex gap-2 items-center">
-                    <span className="bg-green-700 text-white text-xs md:text-sm px-2 md:px-3 py-1 rounded-md">
-                      {timeAgo(timestamp)}
-                    </span>
-                    <span className="hidden md:inline-block bg-green-700 text-white text-xs md:text-sm px-2 md:px-3 py-1 rounded-md">
-                      {typeof timestamp === 'string' ? timestamp.split('T')[0] : new Date(timestamp).toISOString().split('T')[0]}
-                    </span>
+            <div className="bg-white rounded-lg shadow-md p-4">
+             
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-4">
+                {!filteredProducts || !Array.isArray(filteredProducts) || filteredProducts.length === 0 ? (
+                  <div className="col-span-full text-center py-10">
+                    <p className="text-lg text-gray-600">{products.length > 0 ? '' : ''}</p>
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between gap-3 mt-3">
-                    {/* Product Info */}
-                    <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-800">
-                        {productData.productNameMarathi || productData.productNameEnglish}
-                      </h3>
-                      <p className="text-gray-500 text-sm md:text-base">
-                        {isFromDailyProducts ? productData.productNameEnglish : productData.productNameMarathi}
-                      </p>
-                    </div>
-                    {/* Price Details */}
-                    <div className="bg-gray-50 p-3 rounded-lg text-right">
-                      <p className="text-gray-500 text-sm md:text-base">
-                        अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
-                      </p>
-                      <p className="text-gray-500 text-sm md:text-base">
-                        न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
-                      </p>
-                      <p className="text-gray-700 text-sm md:text-base mt-1">
-                        औसत: <span className="text-gray-800 font-bold">₹{calculateAvgPrice(priceMax, priceMin)}</span>
-                      </p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        (प्रति {productData.ProductInUnit || "किलो"})
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
+                ) : (
+                  Array.isArray(filteredProducts) && filteredProducts.map((product) => {
+                    // Handle both DailyProducts and direct Products format
+                    const isFromDailyProducts = product.product && product.product._id;
+                    const productData = isFromDailyProducts ? product.product : product;
+                    const priceMin = product.PriceMin;
+                    const priceMax = product.PriceMax;
+                    const timestamp = isFromDailyProducts ? product.date : product.createdAt;
+                    
+                    return (
+                      <div key={product._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 p-4">
+                        {(product.marketName || (product.product && product.product.marketName)) && (
+                          <div className="mb-2">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              <FaMapMarkerAlt className="mr-1" size={10} />
+                              {product.marketName || (product.product && product.product.marketName) || 'दिंडोरी मुख्य बाजार'}
+                            </span>
+                          </div>
+                        )}
+                        <div className="flex gap-2 items-center">
+                          <span className="bg-green-700 text-white text-xs md:text-sm px-2 md:px-3 py-1 rounded-md">
+                            {timeAgo(timestamp)}
+                          </span>
+                          <span className="hidden md:inline-block bg-green-700 text-white text-xs md:text-sm px-2 md:px-3 py-1 rounded-md">
+                            {typeof timestamp === 'string' ? timestamp.split('T')[0] : new Date(timestamp).toISOString().split('T')[0]}
+                          </span>
+                        </div>
+                        <div className="flex flex-col sm:flex-row justify-between gap-3 mt-3">
+                          {/* Product Info */}
+                          <div className="flex-1">
+                            <h3 className="text-lg md:text-xl font-bold text-gray-800">
+                              {productData.productNameMarathi || productData.productNameEnglish}
+                            </h3>
+                            <p className="text-gray-500 text-sm md:text-base">
+                              {isFromDailyProducts ? productData.productNameEnglish : productData.productNameMarathi}
+                            </p>
+                          </div>
+                          {/* Price Details */}
+                          <div className="bg-gray-50 p-3 rounded-lg text-right">
+                            <p className="text-gray-500 text-sm md:text-base">
+                              अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
+                            </p>
+                            <p className="text-gray-500 text-sm md:text-base">
+                              न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
+                            </p>
+                            <p className="text-gray-700 text-sm md:text-base mt-1">
+                              औसत: <span className="text-gray-800 font-bold">₹{calculateAvgPrice(priceMax, priceMin)}</span>
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1">
+                              (प्रति {productData.ProductInUnit || "किलो"})
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
           )}
         </div>
         

@@ -91,12 +91,12 @@ export default function Staff() {
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="py-3 px-4 border text-center">14</td>
-                    <td className="py-3 px-4 border">गणेश  परदेशी </td>
+                    <td className="py-3 px-4 border">गणेश गुलाबसिंग परदेशी </td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 border text-center">15</td>
-                    <td className="py-3 px-4 border">सुशांत जाधव</td>
+                    <td className="py-3 px-4 border">सुशांत ज्ञानेश्वर जाधव</td>
                     <td className="py-3 px-4 border">शिपाई</td>
                   </tr>
                   <tr className="bg-gray-50">

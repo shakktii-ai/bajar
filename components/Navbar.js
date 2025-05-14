@@ -1060,7 +1060,14 @@ const Navbar = () => {
         const fallbackData = await fallbackRes.json();
         data = fallbackData.filter((product) => {
           if (!product.createdAt) return false;
+          // Only show products with valid price information
+          if (!product.PriceMin || !product.PriceMax) return false;
           return new Date(product.createdAt).toISOString().split("T")[0] === today;
+        });
+      } else {
+        // Filter data from daily products to only include those with price information
+        data = data.filter(product => {
+          return product.PriceMin && product.PriceMax;
         });
       }
 

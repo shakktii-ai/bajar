@@ -80,13 +80,19 @@ export default function AdminLayout({ children }) {
         {/* Sidebar Navigation */}
         <aside className="w-64 bg-white shadow-md h-screen sticky top-0 pt-6">
           <nav>
-            <ul className="space-y-2 px-4">
-              <li>
+            <ul className="space-y-1 px-4">
+              {/* Main Dashboard */}
+              {/* <li>
                 <Link href="/admin" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
                 }`}>
                   डॅशबोर्ड
                 </Link>
+              </li> */}
+              
+              {/* Market Data Section */}
+              <li className="pt-3">
+                <div className="text-xs uppercase text-gray-500 font-semibold px-4 mb-2">बाजार माहिती</div>
               </li>
               <li>
                 <Link href="/admin/product-catalog" className={`block px-4 py-2 rounded font-medium ${
@@ -109,6 +115,11 @@ export default function AdminLayout({ children }) {
                   भाव इतिहास
                 </Link>
               </li>
+              
+              {/* User Management Section */}
+              {/* <li className="pt-3">
+                <div className="text-xs uppercase text-gray-500 font-semibold px-4 mb-2">वापरकर्ता व्यवस्थापन</div>
+              </li>
               <li>
                 <Link href="/admin/farmers" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin/farmers' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
@@ -122,8 +133,12 @@ export default function AdminLayout({ children }) {
                 }`}>
                   व्यापारी व्यवस्थापन
                 </Link>
+              </li> */}
+              
+              {/* Content Management Section */}
+              <li className="pt-3">
+                <div className="text-xs uppercase text-gray-500 font-semibold px-4 mb-2">माहिती व्यवस्थापन</div>
               </li>
-             
               <li>
                 <Link href="/admin/gallery" className={`block px-4 py-2 rounded font-medium ${
                   router.pathname === '/admin/gallery' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
@@ -133,17 +148,22 @@ export default function AdminLayout({ children }) {
               </li>
               <li>
                 <Link href="/admin/add-interview" className={`block px-4 py-2 rounded font-medium ${
-                  router.pathname === '/admin/add-interview' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
+                  router.pathname.startsWith('/admin/add-interview') ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
                 }`}>
                   मुलाखती व्यवस्थापन
                 </Link>
               </li>
               <li>
                 <Link href="/admin/addBlogs" className={`block px-4 py-2 rounded font-medium ${
-                  router.pathname === '/admin/addBlogs' ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
+                  router.pathname.startsWith('/admin/addBlogs') ? 'bg-green-600 text-white' : 'hover:bg-green-100 text-green-800'
                 }`}>
                   ब्लॉग व्यवस्थापन
                 </Link>
+              </li>
+              
+              {/* System Section */}
+              <li className="pt-3">
+                <div className="text-xs uppercase text-gray-500 font-semibold px-4 mb-2">प्रणाली व्यवस्थापन</div>
               </li>
               <li>
                 <Link href="/admin/reports" className={`block px-4 py-2 rounded font-medium ${

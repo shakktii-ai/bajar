@@ -38,7 +38,7 @@ export default function AdminLogin() {
         }));
         
         // Redirect to admin dashboard
-        router.push('/admin');
+        router.push('/admin/product-catalog');
       } else {
         setError('Invalid credentials. Please try again.');
       }
