@@ -584,6 +584,7 @@ export default function Home({Logout, user}) {
                     const productData = isFromDailyProducts ? product.product : product;
                     const priceMin = product.PriceMin;
                     const priceMax = product.PriceMax;
+                    const priceAvg = product.PriceAvg;
                     const timestamp = isFromDailyProducts ? product.date : product.createdAt;
                     
                     return (
@@ -617,13 +618,13 @@ export default function Home({Logout, user}) {
                           {/* Price Details */}
                           <div className="bg-gray-50 p-3 rounded-lg text-right">
                             <p className="text-gray-500 text-sm md:text-base">
-                              अधिकतम: <span className="text-red-600 font-bold">₹{priceMax}</span>
+                              कमाल: <span className="text-red-600 font-bold">₹{priceMax}</span>
                             </p>
                             <p className="text-gray-500 text-sm md:text-base">
-                              न्यूनतम: <span className="text-green-600 font-bold">₹{priceMin}</span>
+                              किमान: <span className="text-green-600 font-bold">₹{priceMin}</span>
                             </p>
                             <p className="text-gray-700 text-sm md:text-base mt-1">
-                              औसत: <span className="text-gray-800 font-bold">₹{calculateAvgPrice(priceMax, priceMin)}</span>
+                              सरासरी: <span className="text-gray-800 font-bold">₹{priceAvg}</span>
                             </p>
                             <p className="text-xs text-gray-400 mt-1">
                               (प्रति {productData.ProductInUnit || "किलो"})

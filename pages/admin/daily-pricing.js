@@ -13,6 +13,7 @@ export default function DailyPricing() {
   const [priceData, setPriceData] = useState({
     PriceMax: '',
     PriceMin: '',
+    PriceAvg: '',
     notes: '',
     marketName: 'दिंडोरी मुख्य बाजार',
     marketStatus: ''
@@ -116,9 +117,12 @@ export default function DailyPricing() {
   // Handle price input change
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
+    
+    // Simply update the state with the new value
+    // No auto-calculation of average price
     setPriceData(prev => ({
       ...prev,
-      [name]: name === 'PriceMax' || name === 'PriceMin' ? Number(value) : value
+      [name]: name === 'PriceMax' || name === 'PriceMin' || name === 'PriceAvg' ? Number(value) : value
     }));
   };
   
@@ -133,8 +137,8 @@ export default function DailyPricing() {
     }
     
     // Validate price values
-    if (!priceData.PriceMax || !priceData.PriceMin) {
-      alert('कृपया शक्य ती कमाल व किमान किंमत भरा'); // Please enter both minimum and maximum prices
+    if (!priceData.PriceMax || !priceData.PriceMin || !priceData.PriceAvg) {
+      alert('कृपया शक्य ती कमाल, किमान व सरासरी किंमत भरा'); // Please enter minimum, maximum and average prices
       return;
     }
 
@@ -158,12 +162,17 @@ export default function DailyPricing() {
       // Format date as YYYY-MM-DD ensuring proper padding
       const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       
+      // Use the manually entered average price directly
+      // Don't recalculate it during submission
+      const avgPrice = Number(priceData.PriceAvg);
+      
       const data = {
         productId: selectedProduct,
         date: formattedDate, // Use the properly formatted date
         marketName: priceData.marketName,
         PriceMax: maxPrice,
         PriceMin: minPrice,
+        PriceAvg: avgPrice,
         notes: priceData.notes || ''
       };
       
@@ -191,6 +200,7 @@ export default function DailyPricing() {
       setPriceData({
         PriceMax: '',
         PriceMin: '',
+        PriceAvg: '',
         notes: '',
         marketName: priceData.marketName, // Keep the selected market name
         marketStatus: priceData.marketStatus // Keep the market status
@@ -402,6 +412,23 @@ export default function DailyPricing() {
                 </div>
               </div>
               
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">सरासरी</label>
+                <div className="flex items-center">
+                  <span className="text-gray-500 mr-2">₹</span>
+                  <input
+                    type="number"
+                    name="PriceAvg"
+                    value={priceData.PriceAvg}
+                    onChange={handlePriceChange}
+                    placeholder="0"
+                    min="0"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                  />
+                </div>
+              </div>
+              
               <div className="md:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-1">बाजार नाव</label>
                 <select
@@ -522,7 +549,7 @@ export default function DailyPricing() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">₹{item.PriceMin}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">₹{item.PriceMax}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">₹{calculateAvgPrice(item.PriceMax, item.PriceMin)}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">₹{item.PriceAvg || calculateAvgPrice(item.PriceMax, item.PriceMin)}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.product?.ProductInUnit || 'किलो'}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.notes || '-'}</td>
                       </tr>

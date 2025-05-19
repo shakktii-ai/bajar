@@ -215,7 +215,7 @@ const addDailyPrice = async (req, res) => {
   const tryAddDailyPrice = async () => {
     try {
     await connectDB();
-    const { productId, date, PriceMax, PriceMin, marketName } = req.body;
+    const { productId, date, PriceMax, PriceMin, PriceAvg, marketName } = req.body;
     
     // Validate required fields
     if (!productId) {
@@ -226,8 +226,8 @@ const addDailyPrice = async (req, res) => {
       return res.status(400).json({ error: 'Date is required' });
     }
     
-    if (PriceMax === undefined || PriceMin === undefined) {
-      return res.status(400).json({ error: 'Both minimum and maximum prices are required' });
+    if (PriceMax === undefined || PriceMin === undefined || PriceAvg === undefined) {
+      return res.status(400).json({ error: 'Minimum, maximum, and average prices are all required' });
     }
     
     // Verify product exists
@@ -239,9 +239,10 @@ const addDailyPrice = async (req, res) => {
     // Parse prices to numbers
     const maxPrice = Number(PriceMax);
     const minPrice = Number(PriceMin);
+    const avgPrice = Number(PriceAvg);
     
-    if (isNaN(maxPrice) || isNaN(minPrice)) {
-      return res.status(400).json({ error: 'Prices must be valid numbers' });
+    if (isNaN(maxPrice) || isNaN(minPrice) || isNaN(avgPrice)) {
+      return res.status(400).json({ error: 'All prices must be valid numbers' });
     }
     
     // Format date properly
@@ -269,6 +270,7 @@ const addDailyPrice = async (req, res) => {
       console.log('Updating existing daily price entry id:', dailyProduct._id);
       dailyProduct.PriceMax = maxPrice;
       dailyProduct.PriceMin = minPrice;
+      dailyProduct.PriceAvg = avgPrice;
       
       // Update marketName if provided
       if (marketName) {
@@ -284,7 +286,8 @@ const addDailyPrice = async (req, res) => {
         date: formattedDate,
         marketName: marketName || 'दिंडोरी मुख्य बाजार',
         PriceMax: maxPrice,
-        PriceMin: minPrice
+        PriceMin: minPrice,
+        PriceAvg: avgPrice
       });
       await dailyProduct.save();
     }

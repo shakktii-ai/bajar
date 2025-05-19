@@ -558,8 +558,8 @@ export default function DailyRate() {
                           <tr>
                             <th className="py-3 px-4 border text-left font-medium">उत्पादन</th>
                             <th className="py-3 px-4 border text-center font-medium">ग्रेड</th>
-                            <th className="py-3 px-4 border text-center font-medium">न्यूनतम</th>
-                            <th className="py-3 px-4 border text-center font-medium">अधिकतम</th>
+                            <th className="py-3 px-4 border text-center font-medium">किमान</th>
+                            <th className="py-3 px-4 border text-center font-medium">कमाल</th>
                             <th className="py-3 px-4 border text-center font-medium">सरासरी</th>
                           </tr>
                         </thead>
@@ -573,9 +573,9 @@ export default function DailyRate() {
                             // Find previous day data for this product
                             const prevDayItem = findPrevDayPrice(item.product._id);
                             
-                            // Calculate average prices
-                            const currentAvg = calculateAvgPrice(item.PriceMax, item.PriceMin);
-                            const prevDayAvg = prevDayItem ? calculateAvgPrice(prevDayItem.PriceMax, prevDayItem.PriceMin) : null;
+                            // Use only the stored average price
+                            const currentAvg = item.PriceAvg;
+                            const prevDayAvg = prevDayItem ? prevDayItem.PriceAvg : null;
                             
                             // Calculate price change percentage and handle case where there's no previous day data
                             let priceChange = '0.00';

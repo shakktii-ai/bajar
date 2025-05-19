@@ -23,6 +23,10 @@ const DailyProductsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  PriceAvg: {
+    type: Number,
+    required: true,
+  },
   notes: {
     type: String,
   }
